@@ -1,6 +1,11 @@
 import { Router } from "express";
-import { createFoodCategory, getAllCategories } from "../controllers";
+import {
+  createFoodCategory,
+  getAllCategories,
+  deleteCategory,
+} from "../controllers";
 export const foodCategoryRouter = Router()
   .post("/", createFoodCategory)
-  .get("/", getAllCategories);
+  .get("/", getAllCategories)
+  .delete("/", deleteCategory);
 //   .get("/");
