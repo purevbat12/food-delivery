@@ -6,8 +6,8 @@ import {
   updateCategory,
 } from "../controllers";
 export const foodCategoryRouter = Router()
-  .post("/", createFoodCategory)
-  .get("/", getAllCategories)
-  .delete("/", deleteCategory)
-  .put("/", updateCategory);
+  .post("/create", createFoodCategory)
+  .get("/get-all", getAllCategories)
+  .delete("/delete", deleteCategory)
+  .put("/update", updateCategory);
 //   .get("/");
