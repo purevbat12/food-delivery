@@ -1,11 +1,8 @@
 import { FoodCategoryModel } from "../../models/food-category.model";
 import { RequestHandler } from "express";
 export const updateCategory: RequestHandler = async (req, res) => {
-  const body = req.body;
-  const updated = await FoodCategoryModel.findByIdAndUpdate(
-    body.id,
-    body.updates
-  );
+  const { id, updates } = req.body;
+  const updated = await FoodCategoryModel.findByIdAndUpdate(id, updates);
   if (updated == null) {
     res
       .sendStatus(404)
