@@ -3,9 +3,11 @@ import {
   createFoodCategory,
   getAllCategories,
   deleteCategory,
+  updateCategory,
 } from "../controllers";
 export const foodCategoryRouter = Router()
   .post("/", createFoodCategory)
   .get("/", getAllCategories)
-  .delete("/", deleteCategory);
+  .delete("/", deleteCategory)
+  .put("/", updateCategory);
 //   .get("/");

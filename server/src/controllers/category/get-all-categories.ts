@@ -1,5 +1,5 @@
 import { FoodCategoryModel } from "../../models/food-category.model";
-import { Request, RequestHandler, Response } from "express";
+import { RequestHandler } from "express";
 
 export const getAllCategories: RequestHandler = async (req, res) => {
   const allCategories = await FoodCategoryModel.find();
