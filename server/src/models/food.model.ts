@@ -13,6 +13,7 @@ type FoodType = {
 const foodSchema = new Schema<FoodType>({
   foodName: {
     type: String,
+    unique: true,
     required: true,
   },
   price: {
