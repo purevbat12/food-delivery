@@ -1,0 +1,19 @@
+"use client";
+import { useState } from "react";
+import SideNav from "./SideNav";
+import FoodMenu from "./FoodMenu";
+import { Orders } from "./Orders";
+export default function Contianer() {
+  const labels = ["Food Menu", "Orders"];
+  const [activeTab, setActiveTab] = useState(labels[0]);
+  return (
+    <div className="flex">
+      <SideNav
+        setActiveTab={setActiveTab}
+        activeTab={activeTab}
+        labels={labels}
+      />
+      {activeTab == "Food Menu" ? <FoodMenu /> : <Orders />}
+    </div>
+  );
+}

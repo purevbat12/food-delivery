@@ -1,4 +1,5 @@
 import { Model, model, models, Schema, StringSchemaDefinition } from "mongoose";
+
 type FoodType = {
   foodName: string;
   price: number;
@@ -8,9 +9,11 @@ type FoodType = {
   createdAt: Date;
   updatedAt: Date;
 };
+
 const foodSchema = new Schema<FoodType>({
   foodName: {
     type: String,
+    unique: true,
     required: true,
   },
   price: {
@@ -28,7 +31,7 @@ const foodSchema = new Schema<FoodType>({
   category: {
     type: Schema.Types.ObjectId,
     required: true,
-    ref: "Category",
+    ref: "FoodCategory",
   },
   createdAt: {
     type: Date,
@@ -37,6 +40,7 @@ const foodSchema = new Schema<FoodType>({
     type: Date,
   },
 });
+
 export const FoodModel: Model<FoodType> =
   models["Food"] || model("Food", foodSchema);
 // id, category name= name

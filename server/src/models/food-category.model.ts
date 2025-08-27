@@ -4,7 +4,7 @@ type FoodCategorySchemaType = {
 };
 const foodCategorySchema = new Schema<FoodCategorySchemaType>(
   {
-    categoryName: { type: String, required: true },
+    categoryName: { type: String, unique: true, required: true },
   },
   { timestamps: true }
 );

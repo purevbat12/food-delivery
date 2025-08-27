@@ -9,7 +9,7 @@ export const createFoodCategory: RequestHandler = async (req, res) => {
     return;
   }
   const newCategory = await FoodCategoryModel.create({ categoryName });
-  res.status(201).json(newCategory);
+  res.status(201).json({ message: "Successfully created category!" });
 };
 
 // mvc architechture => model, router, controller
