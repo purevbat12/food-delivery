@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {
+  getFoods,
   createFood,
   deleteFood,
   getFood,
@@ -10,6 +11,7 @@ import {
 
 export const foodRouter = Router()
   .get("/get", getFood)
+  .get("/get-all", getFoods)
   .get("/get-all-foods-by-all-categories", getAllFoodsByAllCategories)
   .post("/create", createFood)
   .put("/update", updateFood)
