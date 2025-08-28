@@ -8,7 +8,7 @@ type propsType = {
 export default function SideNav(props: propsType) {
   return (
     <div>
-      <div className="flex flex-col gap-[40px] mt-[36px] ml-[20px]">
+      <div className="flex flex-col gap-[40px] mt-[36px] mx-[20px]">
         <Logo />
         <div className="flex flex-col gap-[10px]">
           {props.labels.map((label, labelIndex) => {
