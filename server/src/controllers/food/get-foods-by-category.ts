@@ -5,6 +5,7 @@ export const getFoodsByCategory: RequestHandler = async (req, res) => {
   const foodsByCategory = await FoodModel.find({ category: categoryId });
   if (foodsByCategory == null || foodsByCategory.length == 0) {
     res.json({ message: "No food with " + categoryId + " was found!" });
+    return;
   }
   res.json({ foodsByCategory });
 };

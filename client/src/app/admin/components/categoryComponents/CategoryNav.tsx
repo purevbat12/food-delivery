@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
 type categoryType = {
   categoryName?: string;
-  id?: string;
+  _id?: string;
 };
 type propsType = {
   categories: categoryType[];
@@ -9,6 +9,10 @@ type propsType = {
   countsOfItemsWithinCategory: number[];
   setCategoryChoosen: Dispatch<SetStateAction<string>>;
   categoryChoosen: string;
+  setCreateCategoryModalIsOpen: Dispatch<SetStateAction<boolean>>;
+  setUpdateCategoryModalIsOpen: Dispatch<SetStateAction<boolean>>;
+  categoryToBeDeletedName: string;
+  setCategoryToBeDeletedName: Dispatch<SetStateAction<string>>;
 };
 export default function CategoryNav(props: propsType) {
   return (
@@ -22,37 +26,66 @@ export default function CategoryNav(props: propsType) {
             props.setCategoryChoosen("All Categories");
           }}
           className="py-[8px] px-[16px] rounded-[9999px] border border-[1px] cursor-pointer"
-          style={{ borderColor: "#EF4444" }}
+          style={{
+            borderColor:
+              props.categoryChoosen == "All Categories" ? "#EF4444" : "#E4E4E7",
+          }}
         >
           <span className="text-[14px] font-[500]">
             All Categories
-            <span className="text-[12px] font-[600] ml-[8px] bg-[#18181B] text-[#FAFAFA] py-[2px] px-[10px] rounded-[9999px]">
+            <span className="text-[12px] font-[600] ml-[8px] bg-[#18181B] transition-all duration-[0.2s]  text-[#FAFAFA] py-[2px] px-[10px] rounded-[9999px]">
               {props.countOfAllItems}
             </span>
           </span>
         </button>
         {props.categories.map((category, categoryIndex) => {
           return (
-            <button
-              onClick={() => {
-                props.setCategoryChoosen(category.categoryName ?? "");
-              }}
+            <div
               key={categoryIndex}
-              className="py-[8px] px-[16px] rounded-[9999px] border border-[#E4E4E7] transition-all duration-[0.2s] border-[1px] cursor-pointer hover:border-[#EF4444]"
+              className="flex gap-[10px] py-[8px] px-[16px] rounded-[9999px] border transition-all duration-[0.2s] border-[1px]"
               style={{
                 borderColor:
-                  props.setCategoryChoosen == category ? "#EF4444" : "#E4E4E7",
+                  props.categoryChoosen == category.categoryName
+                    ? "#EF4444"
+                    : "#E4E4E7",
               }}
             >
-              <span>
-                {category.categoryName}
-                <span className="text-[12px] font-[600] ml-[8px] bg-[#18181B] text-[#FAFAFA] py-[2px] px-[10px] rounded-[9999px]">
-                  {props.countsOfItemsWithinCategory[categoryIndex]}
+              <button
+                className="cursor-pointer"
+                onClick={() => {
+                  props.setCategoryToBeDeletedName(category._id ?? "");
+                  props.setUpdateCategoryModalIsOpen(true);
+                }}
+              >
+                <img
+                  src="/images/icons/edit-246.png"
+                  className="w-[20px] h-[20px]"
+                ></img>
+              </button>
+              <button
+                onClick={() => {
+                  props.setCategoryChoosen(category.categoryName ?? "");
+                }}
+                className="cursor-pointer"
+              >
+                <span>
+                  {category.categoryName}
+                  <span className="text-[12px] font-[600] ml-[8px] bg-[#18181B] text-[#FAFAFA] py-[2px] px-[10px] rounded-[9999px]">
+                    {props.countsOfItemsWithinCategory[categoryIndex]}
+                  </span>
                 </span>
-              </span>
-            </button>
+              </button>
+            </div>
           );
         })}
+        <button
+          onClick={() => {
+            props.setCreateCategoryModalIsOpen(true);
+          }}
+          className="text-[25px] text-[#FAFAFA] bg-[#EF4444] rounded-[100%] w-[36px] h-[36px] cursor-pointer"
+        >
+          +
+        </button>
       </div>
     </div>
   );
