@@ -10,8 +10,9 @@ connectDatabase();
 const port = 8000;
 
 app.use(express.json());
-app.use(cors({origin: "*"}));
-app.use("./auth", authRouter);
+app.use(cors({ origin: "*" }));
+//app.options("*", cors());
+app.use("/auth", authRouter);
 app.use("/food-category", foodCategoryRouter);
 app.use("/food", foodRouter);
 app.listen(port, () => {

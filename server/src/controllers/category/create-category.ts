@@ -3,7 +3,6 @@ import { RequestHandler } from "express";
 
 export const createFoodCategory: RequestHandler = async (req, res) => {
   const { categoryName } = req.body;
-
   if (!categoryName) {
     res.status(400).json({ message: "Category name is required" });
     return;
