@@ -7,6 +7,7 @@ export const updateCategory: RequestHandler = async (req, res) => {
     res
       .sendStatus(404)
       .json({ message: "Couldn't find the item specified by given id!" });
+    return;
   }
   res.json({ message: "Updated successfully!" });
 };
