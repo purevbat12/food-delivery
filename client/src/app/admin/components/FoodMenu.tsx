@@ -1,15 +1,14 @@
 import { Dispatch, SetStateAction } from "react";
 import Categories from "./categoryComponents/Categories";
 import CategoryNav from "./categoryComponents/CategoryNav";
-type categoryType = {
-  categoryName?: string;
-  _id?: string;
-};
+import { categoryType, foodType } from "../types";
 type propsType = {
   setCategories: Dispatch<SetStateAction<categoryType[]>>;
   categories: categoryType[];
-  countsOfItemsWithinCategory: number[];
-  setCountsOfItemsWithinCategory: Dispatch<SetStateAction<number[]>>;
+  countsOfItemsWithinCategory: Record<string, number>;
+  setCountsOfItemsWithinCategory: Dispatch<
+    SetStateAction<Record<string, number>>
+  >;
   countOfAllItems: number;
   setCountOfAllItems: Dispatch<SetStateAction<number>>;
   loading: boolean;
@@ -18,8 +17,11 @@ type propsType = {
   setCategoryChoosen: Dispatch<SetStateAction<string>>;
   setCreateCategoryModalIsOpen: Dispatch<SetStateAction<boolean>>;
   setUpdateCategoryModalIsOpen: Dispatch<SetStateAction<boolean>>;
-  categoryToBeDeletedName: string;
-  setCategoryToBeDeletedName: Dispatch<SetStateAction<string>>;
+  categoryToBeEditedId: string;
+  setCategoryToBeEditedId: Dispatch<SetStateAction<string>>;
+  foodsOfCategory: foodType[];
+  createFoodModalIsOpen: boolean;
+  setCreateFoodModalIsOpen: Dispatch<SetStateAction<boolean>>;
 };
 export default function Orders(props: propsType) {
   if (props.loading) {
@@ -30,7 +32,7 @@ export default function Orders(props: propsType) {
     );
   } else {
     return (
-      <div className="bg-[#F4F4F5] w-[100%] h-[100vh] pr-[40px] pl-[24px] pt-[84px]">
+      <div className="flex flex-col bg-[#F4F4F5] w-[100%] h-[100vh] pr-[40px] pl-[24px] pt-[84px] gap-[24px]">
         <CategoryNav
           categories={props.categories}
           countOfAllItems={props.countOfAllItems}
@@ -39,10 +41,17 @@ export default function Orders(props: propsType) {
           categoryChoosen={props.categoryChoosen}
           setCreateCategoryModalIsOpen={props.setCreateCategoryModalIsOpen}
           setUpdateCategoryModalIsOpen={props.setUpdateCategoryModalIsOpen}
-          categoryToBeDeletedName={props.categoryToBeDeletedName}
-          setCategoryToBeDeletedName={props.setCategoryToBeDeletedName}
+          categoryToBeEditedId={props.categoryToBeEditedId}
+          setCategoryToBeEditedId={props.setCategoryToBeEditedId}
         />
-        <Categories />
+        <Categories
+          categoryChoosen={props.categoryChoosen}
+          foodsOfCategory={props.foodsOfCategory}
+          categories={props.categories}
+          countsOfItemsWithinCategory={props.countsOfItemsWithinCategory}
+          createFoodModalIsOpen={props.createFoodModalIsOpen}
+          setCreateFoodModalIsOpen={props.setCreateFoodModalIsOpen}
+        />
       </div>
     );
   }

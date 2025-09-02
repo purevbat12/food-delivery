@@ -7,12 +7,17 @@ import {
   getAllFoodsByAllCategories,
   updateFood,
   getFoodsByCategory,
+  getAllFoodsByAllCategoriesObject,
 } from "../controllers/food";
 
 export const foodRouter = Router()
   .get("/get", getFood)
   .get("/get-all", getFoods)
   .get("/get-all-foods-by-all-categories", getAllFoodsByAllCategories)
+  .get(
+    "/get-all-foods-by-all-categories-object",
+    getAllFoodsByAllCategoriesObject
+  )
   .post("/create", createFood)
   .put("/update", updateFood)
   .delete("/delete", deleteFood)

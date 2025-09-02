@@ -6,13 +6,13 @@ type categoryType = {
 type propsType = {
   categories: categoryType[];
   countOfAllItems: number;
-  countsOfItemsWithinCategory: number[];
+  countsOfItemsWithinCategory: Record<string, number>;
   setCategoryChoosen: Dispatch<SetStateAction<string>>;
   categoryChoosen: string;
   setCreateCategoryModalIsOpen: Dispatch<SetStateAction<boolean>>;
   setUpdateCategoryModalIsOpen: Dispatch<SetStateAction<boolean>>;
-  categoryToBeDeletedName: string;
-  setCategoryToBeDeletedName: Dispatch<SetStateAction<string>>;
+  categoryToBeEditedId: string;
+  setCategoryToBeEditedId: Dispatch<SetStateAction<string>>;
 };
 export default function CategoryNav(props: propsType) {
   return (
@@ -53,7 +53,7 @@ export default function CategoryNav(props: propsType) {
               <button
                 className="cursor-pointer"
                 onClick={() => {
-                  props.setCategoryToBeDeletedName(category._id ?? "");
+                  props.setCategoryToBeEditedId(category._id ?? "");
                   props.setUpdateCategoryModalIsOpen(true);
                 }}
               >
@@ -71,7 +71,13 @@ export default function CategoryNav(props: propsType) {
                 <span>
                   {category.categoryName}
                   <span className="text-[12px] font-[600] ml-[8px] bg-[#18181B] text-[#FAFAFA] py-[2px] px-[10px] rounded-[9999px]">
-                    {props.countsOfItemsWithinCategory[categoryIndex]}
+                    {
+                      props.countsOfItemsWithinCategory[
+                        Object.keys(props.countsOfItemsWithinCategory)[
+                          categoryIndex
+                        ]
+                      ]
+                    }
                   </span>
                 </span>
               </button>

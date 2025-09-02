@@ -8,6 +8,6 @@ import {
 export const foodCategoryRouter = Router()
   .post("/create", createFoodCategory)
   .get("/get-all", getAllCategories)
-  .delete("/delete", deleteCategory)
+  .delete("/delete/:id", deleteCategory)
   .put("/update", updateCategory);
 //   .get("/");

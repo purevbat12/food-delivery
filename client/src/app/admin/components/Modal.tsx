@@ -1,4 +1,3 @@
-"use client";
 import { ReactNode, Dispatch, SetStateAction } from "react";
 type propsType = {
   title: string;
