@@ -78,12 +78,16 @@ export default function Contianer() {
   }
   async function deleteCategory(id: string) {
     //"http://localhost:8000/food-category/delete"
-    await fetch(`http://localhost:8000/food-category/delete/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
+    console.log(`http://localhost:8000/food-category/delete/${id}`);
+    const res = await fetch(
+      `http://localhost:8000/food-category/delete/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
       .then((response) => {
         if (!response.ok) {
           throw new Error("HTTP error! Status: " + response.status);
@@ -92,6 +96,7 @@ export default function Contianer() {
       .catch((err) => {
         console.log(err);
       });
+    console.log(res);
     setAreYouSureModalIsOpen(false);
     setUpdateCategoryModalIsOpen(false);
   }
@@ -189,6 +194,9 @@ export default function Contianer() {
     }
     getCounts();
   }, [categories]);
+  useEffect(() => {
+    console.log(categoryToBeEditedId);
+  }, [categoryToBeEditedId]);
   useEffect(() => {
     async function getFoods() {
       let foundCategoryId: string | undefined = "";
@@ -427,6 +435,7 @@ export default function Contianer() {
           </label>
           <button
             onClick={() => {
+              console.log(categoryToBeEditedId);
               deleteCategory(categoryToBeEditedId);
             }}
             className="text-[14px] text-[#FAFAFA] font-[500] bg-[#18181B] py-[8px] px-[16px] rounded-[6px] cursor-pointer"

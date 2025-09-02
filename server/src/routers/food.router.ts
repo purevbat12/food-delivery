@@ -20,5 +20,5 @@ export const foodRouter = Router()
   )
   .post("/create", createFood)
   .put("/update", updateFood)
-  .delete("/delete", deleteFood)
+  .delete("/delete/:id", deleteFood)
   .get("/get-foods-by-category", getFoodsByCategory);
