@@ -7,14 +7,14 @@ type propsType = {
 };
 export default function SideNav(props: propsType) {
   return (
-    <div className="w-[205px]">
-      <div className="flex flex-col gap-[40px] mt-[36px] mx-[20px]">
+    <div className="w-[18%]">
+      <div className="flex flex-col gap-[40px] mt-[36px] mx-[50px]">
         <Logo />
         <div className="flex flex-col gap-[10px]">
           {props.labels.map((label, labelIndex) => {
             return (
               <button
-                className="text-[14px] rounded-[9999px] py-[8px] px-[16px] w-[165px] cursor-pointer flex gap-[10px]"
+                className="rounded-[9999px] py-[8px] px-[24px] cursor-pointer flex gap-[10px]"
                 key={labelIndex}
                 onClick={() => {
                   props.setActiveTab(label);
