@@ -1,5 +1,12 @@
-import { useState, useEffect } from "react";
-export default function AllDishes() {
+"use client";
+import { useState, useEffect, Dispatch, SetStateAction } from "react";
+type propsType = {
+  selectedCategoryState: {
+    value: string;
+    setter: Dispatch<SetStateAction<string>>;
+  };
+};
+export default function AllDishes({ selectedCategoryState }: propsType) {
   const [countOfAllItems, setCountOfAllItems] = useState(0);
   useEffect(() => {
     async function getAllItems() {
@@ -32,13 +39,24 @@ export default function AllDishes() {
     getAllItems();
   }, []);
   return (
-    <div className="rounded-[9999px] border border-[#EF4444] py-[8px] px-[16px] cursor-pointer w-[145px]">
+    <button
+      onClick={() => {
+        selectedCategoryState.setter("All Categories");
+      }}
+      className="rounded-[9999px] border border-[#EF4444] py-[8px] px-[16px] cursor-pointer w-[145px] transition-all duration-[0.2s]"
+      style={{
+        borderColor:
+          selectedCategoryState.value == "All Categories"
+            ? "#EF4444"
+            : "#E4E4E7",
+      }}
+    >
       <p className="text-[14px] font-[500]">
         All Dishes{"  "}
         <span className="bg-[#18181B] text-[#FAFAFA] py-[2px] px-[10px] rounded-[9999px]">
           {countOfAllItems}
         </span>
       </p>
-    </div>
+    </button>
   );
 }
