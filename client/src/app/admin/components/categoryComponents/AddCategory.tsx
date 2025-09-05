@@ -67,6 +67,7 @@ export default function AddCategory({ rerenderState }: propsType) {
           <DialogClose asChild>
             <Button
               onClick={() => {
+                setNewCategoryInput("");
                 addCategory(newCategoryInput);
               }}
               type="button"

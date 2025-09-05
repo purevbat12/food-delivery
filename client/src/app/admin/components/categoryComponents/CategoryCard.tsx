@@ -88,7 +88,7 @@ export default function CategoryCard({
       }}
     >
       <Dialog>
-        <DialogTrigger>
+        <DialogTrigger asChild>
           <button className="cursor-pointer">
             <img
               src="/images/icons/edit.png"
@@ -111,35 +111,41 @@ export default function CategoryCard({
             />
           </div>
           <DialogFooter className="sm:justify-between">
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button variant="destructive" className="cursor-pointer">
+                  Delete
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Are you sure?</DialogTitle>
+                  <DialogDescription>
+                    The following action will delete this category and all the
+                    items linked/within it. Click the x button to say no or
+                    press the button down below to say yes.
+                  </DialogDescription>
+                </DialogHeader>
+                <DialogFooter className="sm:justify-center">
+                  <DialogClose asChild>
+                    <Button
+                      className="cursor-pointer"
+                      variant="destructive"
+                      onClick={() => {
+                        setNewCategoryNameInput("");
+                        deleteCategory(category._id);
+                      }}
+                    >
+                      Yes
+                    </Button>
+                  </DialogClose>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
             <DialogClose asChild>
-              <Dialog>
-                <DialogTrigger>
-                  <Button>Delete</Button>
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle>Are you sure?</DialogTitle>
-                    <DialogDescription>
-                      The following action will delete this category and all the
-                      items linked/within it. Click the x button to say no or
-                      press the button down below to say yes.
-                    </DialogDescription>
-                  </DialogHeader>
-                  <DialogFooter className="sm:justify-center">
-                    <DialogClose asChild>
-                      <Button
-                        onClick={() => {
-                          deleteCategory(category._id);
-                        }}
-                      >
-                        Yes
-                      </Button>
-                    </DialogClose>
-                  </DialogFooter>
-                </DialogContent>
-              </Dialog>
               <Button
                 onClick={() => {
+                  setNewCategoryNameInput("");
                   updateCategory(category._id, newCategoryNameInput);
                 }}
               >
