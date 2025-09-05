@@ -7,6 +7,7 @@ type propsType = {
   };
 };
 export default function AllDishes({ selectedCategoryState }: propsType) {
+
   const [countOfAllItems, setCountOfAllItems] = useState(0);
   useEffect(() => {
     async function getAllItems() {
