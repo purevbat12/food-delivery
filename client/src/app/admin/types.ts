@@ -7,6 +7,6 @@ export type foodType = {
   category: string;
 };
 export type categoryType = {
-  categoryName?: string;
-  _id?: string;
+  categoryName: string;
+  _id: string;
 };
