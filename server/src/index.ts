@@ -9,7 +9,8 @@ configDotenv();
 connectDatabase();
 const port = 8000;
 
-app.use(express.json());
+app.use(express.json({ limit: "10mb" })); // allow up to 10 MB JSON payloads
+app.use(express.urlencoded({ limit: "10mb", extended: true }));
 app.use(cors({ origin: "*" }));
 //app.options("*", cors());
 app.use("/auth", authRouter);
