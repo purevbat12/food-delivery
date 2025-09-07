@@ -7,7 +7,7 @@ export default function Contianer() {
   const labels = ["Food Menu", "Orders"];
   const [activeTab, setActiveTab] = useState(labels[0]);
   return (
-    <div className="flex absolute h-[100%] w-[100%]">
+    <div className="flex absolute w-[100%]">
       <SideNav
         setActiveTab={setActiveTab}
         activeTab={activeTab}

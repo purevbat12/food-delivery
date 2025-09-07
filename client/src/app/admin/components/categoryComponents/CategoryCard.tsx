@@ -1,6 +1,7 @@
 "use client";
 import { categoryType } from "../../types";
-import { useState, Dispatch, SetStateAction } from "react";
+import { useState, useEffect, Dispatch, SetStateAction } from "react";
+import { produce } from "immer";
 import {
   Dialog,
   DialogContent,
@@ -11,10 +12,10 @@ import {
   DialogClose,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
+import InputComp from "../InputComp";
 import { Button } from "@/components/ui/button";
 type propsType = {
+  categories: categoryType[];
   countOfItems: number;
   selectedCategoryState: {
     value: string;
@@ -31,33 +32,70 @@ export default function CategoryCard({
   countOfItems,
   category,
   rerenderState,
+  categories,
 }: propsType) {
-  const [newCategoryNameInput, setNewCategoryNameInput] = useState("");
-  async function updateCategory(id: string, newCategoryName: string) {
-    await fetch(`http://localhost:8000/food-category/update`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        id: id,
-        updates: {
-          categoryName: newCategoryName,
-        },
-      }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("HTTP error! Status " + response.status);
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-      })
-      .finally(() => {
-        rerenderState.setter(rerenderState.value + 1);
-      });
+  const [allInputs, setAllInputs] = useState<
+    Record<string, { value: unknown; error: string; type: string }>
+  >({ "New Category Name": { value: "", error: "", type: "text" } });
+  const [updateModalOpen, setUpdateModalOpen] = useState(false);
+  function inputValidationUpdate(): boolean {
+    let tempCount = 0;
+    for (let i = 0; i < Object.keys(allInputs).length; i++) {
+      if (allInputs[Object.keys(allInputs)[i]].value == "") {
+        setAllInputs((prev) =>
+          produce(prev, (draft) => {
+            draft[Object.keys(allInputs)[i]].error = "Empty input!";
+          })
+        );
+        tempCount++;
+      }
+    }
+    if (tempCount != 0) {
+      return false;
+    }
+    for (let i = 0; i < categories.length; i++) {
+      if (allInputs["New Category Name"].value == categories[i].categoryName) {
+        setAllInputs((prev) =>
+          produce(prev, (draft) => {
+            draft[
+              "New Category Name"
+            ].error = `Category named this way already exists!`;
+          })
+        );
+        return false;
+      }
+    }
+    return true;
   }
+  async function updateCategory(id: string, newCategoryName: string | unknown) {
+    if (inputValidationUpdate()) {
+      setUpdateModalOpen(false);
+      await fetch(`http://localhost:8000/food-category/update`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: id,
+          updates: {
+            categoryName: newCategoryName,
+          },
+        }),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("HTTP error! Status " + response.status);
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+        })
+        .finally(() => {
+          rerenderState.setter(rerenderState.value + 1);
+        });
+    }
+  }
+
   async function deleteCategory(id: string) {
     await fetch(`http://localhost:8000/food-category/delete/${id}`, {
       method: "DELETE",
@@ -77,6 +115,20 @@ export default function CategoryCard({
         rerenderState.setter(rerenderState.value + 1);
       });
   }
+  useEffect(() => {
+    if (!updateModalOpen) {
+      for (let i = 0; i < Object.keys(allInputs).length; i++) {
+        setAllInputs((prev) =>
+          produce(prev, (draft) => {
+            draft[Object.keys(allInputs)[i] as keyof typeof allInputs].error =
+              "";
+            draft[Object.keys(allInputs)[i] as keyof typeof allInputs].value =
+              "";
+          })
+        );
+      }
+    }
+  }, [updateModalOpen]);
   return (
     <div
       className="rounded-[9999px] border py-[8px] px-[16px] transition-all duration-[0.2s] flex gap-[5px] justify-center items-center"
@@ -87,9 +139,14 @@ export default function CategoryCard({
             : "#E4E4E7",
       }}
     >
-      <Dialog>
+      <Dialog open={updateModalOpen} onOpenChange={setUpdateModalOpen}>
         <DialogTrigger asChild>
-          <button className="cursor-pointer">
+          <button
+            onClick={() => {
+              setUpdateModalOpen(true);
+            }}
+            className="cursor-pointer"
+          >
             <img
               src="/images/icons/edit.png"
               className="w-[16px] h-[16px]"
@@ -100,16 +157,17 @@ export default function CategoryCard({
           <DialogHeader>
             <DialogTitle>Edit Category</DialogTitle>
           </DialogHeader>
-          <div className="flex flex-col gap-[8px]">
-            <Label htmlFor="newCategoryName">New category name</Label>
-            <Input
-              id="newCategoryName"
-              type="text"
-              onChange={(event) => {
-                setNewCategoryNameInput(event.target.value);
-              }}
-            />
-          </div>
+          {Object.keys(allInputs).map((input, inputIndex) => {
+            return (
+              <InputComp
+                key={inputIndex}
+                label={input}
+                setAllInputs={setAllInputs}
+                input={allInputs[input]}
+                type={allInputs[input].type}
+              />
+            );
+          })}
           <DialogFooter className="sm:justify-between">
             <Dialog>
               <DialogTrigger asChild>
@@ -132,7 +190,18 @@ export default function CategoryCard({
                       className="cursor-pointer"
                       variant="destructive"
                       onClick={() => {
-                        setNewCategoryNameInput("");
+                        for (
+                          let i = 0;
+                          i < Object.keys(allInputs).length;
+                          i++
+                        ) {
+                          setAllInputs((prev) =>
+                            produce(prev, (draft) => {
+                              draft[Object.keys(allInputs)[i]].value = "";
+                              draft[Object.keys(allInputs)[i]].error = "";
+                            })
+                          );
+                        }
                         deleteCategory(category._id);
                       }}
                     >
@@ -142,16 +211,17 @@ export default function CategoryCard({
                 </DialogFooter>
               </DialogContent>
             </Dialog>
-            <DialogClose asChild>
-              <Button
-                onClick={() => {
-                  setNewCategoryNameInput("");
-                  updateCategory(category._id, newCategoryNameInput);
-                }}
-              >
-                Update
-              </Button>
-            </DialogClose>
+            <Button
+              className="cursor-pointer"
+              onClick={() => {
+                updateCategory(
+                  category._id,
+                  allInputs["New Category Name"].value
+                );
+              }}
+            >
+              Update
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

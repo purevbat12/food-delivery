@@ -9,15 +9,19 @@ type propsType = {
     value: string;
     setter: Dispatch<SetStateAction<string>>;
   };
+  rerenderState: {
+    value: number;
+    setter: Dispatch<SetStateAction<number>>;
+  };
 };
-export default function CategoryCards({ selectedCategoryState }: propsType) {
+export default function CategoryCards({
+  selectedCategoryState,
+  rerenderState,
+}: propsType) {
   const [categories, setCategories] = useState<categoryType[]>([]);
-  const [rerender, setRerender] = useState(0);
-  useEffect(() => {
-    console.log(rerender);
-  }, [rerender]);
   const [categoryItems, setCategoryItems] = useState<foodType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     async function getAllItems() {
       await fetch(
@@ -36,9 +40,6 @@ export default function CategoryCards({ selectedCategoryState }: propsType) {
           return response.json();
         })
         .then((data) => {
-          console.log("categor");
-          console.log(data);
-          console.log(data[0].length);
           setCategoryItems(data);
         })
         .catch((err) => {
@@ -46,7 +47,7 @@ export default function CategoryCards({ selectedCategoryState }: propsType) {
         });
     }
     getAllItems();
-  }, [rerender]);
+  }, [rerenderState.value]);
   useEffect(() => {
     async function getCategories() {
       await fetch(`http://localhost:8000/food-category/get-all`, {
@@ -62,7 +63,6 @@ export default function CategoryCards({ selectedCategoryState }: propsType) {
           return response.json();
         })
         .then((data) => {
-          console.log(data);
           setCategories(data.allCategories);
         })
         .catch((err) => {
@@ -71,7 +71,7 @@ export default function CategoryCards({ selectedCategoryState }: propsType) {
     }
     getCategories();
     setIsLoading(false);
-  }, [rerender]);
+  }, [rerenderState.value]);
   if (isLoading) {
     return (
       <div>
@@ -85,7 +85,8 @@ export default function CategoryCards({ selectedCategoryState }: propsType) {
       {categories.map((category, categoryIndex) => {
         return (
           <CategoryCard
-            rerenderState={{ value: rerender, setter: setRerender }}
+            rerenderState={rerenderState}
+            categories={categories}
             selectedCategoryState={selectedCategoryState}
             key={categoryIndex}
             countOfItems={
@@ -97,7 +98,7 @@ export default function CategoryCards({ selectedCategoryState }: propsType) {
           />
         );
       })}
-      <AddCategory rerenderState={{ value: rerender, setter: setRerender }} />
+      <AddCategory rerenderState={rerenderState} categories={categories} />
     </div>
   );
 }
