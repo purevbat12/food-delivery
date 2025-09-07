@@ -1,9 +1,10 @@
 "use client";
 import Category from "./Category";
 import { useState, useEffect, Dispatch, SetStateAction } from "react";
-import { foodType } from "../../types";
+import { foodType, categoryType } from "../../types";
 type propsType = {
   selectedCategory: string;
+  categories: categoryType[];
   rerenderState: {
     value: number;
     setter: Dispatch<SetStateAction<number>>;
@@ -12,6 +13,7 @@ type propsType = {
 export default function Categories({
   selectedCategory,
   rerenderState,
+  categories,
 }: propsType) {
   const [allCategoriesFoods, setAllCategoriesFoods] = useState<
     Record<string, foodType[]>
@@ -49,7 +51,7 @@ export default function Categories({
         .finally(() => {});
     }
     getAllItems();
-  }, [rerenderState.value]);
+  }, [rerenderState.value, selectedCategory]);
   return (
     <div className="flex flex-col gap-[24px]">
       {selectedCategory == "All Categories" ? (
@@ -57,6 +59,7 @@ export default function Categories({
           (categoryFoods: string, categoryFoodsIndex: number) => {
             return (
               <Category
+                categories={categories}
                 key={categoryFoodsIndex}
                 rerenderState={rerenderState}
                 title={categoryFoods}
@@ -67,6 +70,7 @@ export default function Categories({
         )
       ) : (
         <Category
+          categories={categories}
           title={selectedCategory}
           foods={foods}
           rerenderState={rerenderState}

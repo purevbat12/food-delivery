@@ -1,6 +1,6 @@
 import CategoryFoodCard from "./CategoryFoodCard";
-import { foodType } from "../../types";
-import { Dispatch, SetStateAction } from "react";
+import { foodType, categoryType } from "../../types";
+import { useState, Dispatch, SetStateAction } from "react";
 type propsType = {
   title: string;
   foods: foodType[];
@@ -8,18 +8,36 @@ type propsType = {
     value: number;
     setter: Dispatch<SetStateAction<number>>;
   };
+  categories: categoryType[];
 };
 import AddFood from "./AddFood";
-export default function Category({ title, foods, rerenderState }: propsType) {
+export default function Category({
+  title,
+  foods,
+  rerenderState,
+  categories,
+}: propsType) {
   return (
-    <div className="bg-[#FFFFFF] w-[1171px] rounded-[16px] p-[24px] flex flex-col gap-[16px]">
+    <div className="bg-[#FFFFFF] w-[100%] flex-wrap rounded-[16px] p-[24px] flex flex-col gap-[16px]">
       <h1 className="text-[20px] font-[600]">
         {title} ({foods.length})
       </h1>
-      <div className="flex gap-[16px]">
-        <AddFood title={title} rerenderState={rerenderState} />
+      <div className="flex gap-[16px] flex-wrap">
+        <AddFood
+          title={title}
+          rerenderState={rerenderState}
+          categories={categories}
+        />
         {foods.map((food, foodIndex) => {
-          return <CategoryFoodCard key={foodIndex} food={food} />;
+          return (
+            <CategoryFoodCard
+              currentCategory={title}
+              rerenderState={rerenderState}
+              key={foodIndex}
+              food={food}
+              categories={categories}
+            />
+          );
         })}
       </div>
     </div>

@@ -165,6 +165,7 @@ export default function CategoryCard({
                 setAllInputs={setAllInputs}
                 input={allInputs[input]}
                 type={allInputs[input].type}
+                previewState={undefined}
               />
             );
           })}

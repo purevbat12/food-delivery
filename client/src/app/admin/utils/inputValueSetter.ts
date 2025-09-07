@@ -13,10 +13,12 @@ type InputState = Record<
 export default function inputValueSetter(
   setAllInputs: Dispatch<SetStateAction<InputState>>,
   inputName: string,
-  event: React.ChangeEvent<HTMLInputElement>,
+  event:
+    | React.ChangeEvent<HTMLInputElement>
+    | React.ChangeEvent<HTMLSelectElement>,
   type: string
 ) {
-  if (type == "text") {
+  if (type == "text" || type == "select") {
     setAllInputs((prev) =>
       produce(prev, (draft) => {
         draft[inputName].value = event.target.value;

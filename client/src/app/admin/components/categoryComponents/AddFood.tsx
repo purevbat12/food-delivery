@@ -20,34 +20,15 @@ type propsType = {
     value: number;
     setter: Dispatch<SetStateAction<number>>;
   };
+  categories: categoryType[];
 };
-export default function AddFood({ title, rerenderState }: propsType) {
+export default function AddFood({
+  title,
+  rerenderState,
+  categories,
+}: propsType) {
   const [addFoodModalOpen, setAddFoodModalOpen] = useState(false);
-  const [categories, setCategories] = useState<categoryType[]>([]);
   const [preview, setPreview] = useState<null | string>("");
-  useEffect(() => {
-    async function getCategories() {
-      await fetch(`http://localhost:8000/food-category/get-all`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("HTTP error! Status " + response.status);
-          }
-          return response.json();
-        })
-        .then((data) => {
-          setCategories(data);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    }
-    getCategories();
-  }, [rerenderState.value]);
   const [allInputs, setAllInputs] = useState<
     Record<string, { value: unknown; error: string; type: string }>
   >({
@@ -94,13 +75,17 @@ export default function AddFood({ title, rerenderState }: propsType) {
     if (inputValidation()) {
       setAddFoodModalOpen(false);
       let _id = "";
+      console.log(categories);
       for (let i = 0; i < categories.length; i++) {
         if (title == categories[i].categoryName) {
           _id = categories[i]._id;
           console.log(`${title} == ${categories[i]._id}`);
           break;
+        } else {
+          console.log(title + " != " + categories[i].categoryName);
         }
       }
+      console.log(_id);
       await fetch(`http://localhost:8000/food/create`, {
         method: "POST",
         headers: {
@@ -121,9 +106,39 @@ export default function AddFood({ title, rerenderState }: propsType) {
         })
         .catch((err) => {
           console.error(err);
+        })
+        .finally(() => {
+          rerenderState.setter(rerenderState.value + 1);
         });
     }
   }
+  useEffect(() => {
+    if (!addFoodModalOpen) {
+      setPreview(null);
+      for (let i = 0; i < Object.keys(allInputs).length; i++) {
+        if (allInputs[Object.keys(allInputs)[i]].value != "") {
+          setAllInputs((prev) =>
+            produce(prev, (draft) => {
+              draft[Object.keys(allInputs)[i]].value = "";
+            })
+          );
+        } else if (allInputs[Object.keys(allInputs)[i]] != null) {
+          setAllInputs((prev) =>
+            produce(prev, (draft) => {
+              draft[Object.keys(allInputs)[i]].value = null;
+            })
+          );
+        }
+        if (allInputs[Object.keys(allInputs)[i]].error != "") {
+          setAllInputs((prev) =>
+            produce(prev, (draft) => {
+              draft[Object.keys(allInputs)[i]].error = "";
+            })
+          );
+        }
+      }
+    }
+  }, [addFoodModalOpen]);
   return (
     <Dialog open={addFoodModalOpen} onOpenChange={setAddFoodModalOpen}>
       <DialogTrigger asChild>

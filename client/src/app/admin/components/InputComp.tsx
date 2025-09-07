@@ -3,6 +3,8 @@ import { Label } from "@/components/ui/label";
 import { produce } from "immer";
 import inputValueSetter from "../utils/inputValueSetter";
 import { useState, useEffect, Dispatch, SetStateAction } from "react";
+import { categoryType } from "../types";
+import Categories from "./categoryComponents/Categories";
 type propsType = {
   setAllInputs: Dispatch<
     SetStateAction<
@@ -29,6 +31,7 @@ type propsType = {
         setter: Dispatch<SetStateAction<null | string>>;
       }
     | undefined;
+  categories?: categoryType[];
 };
 export default function InputComp({
   setAllInputs,
@@ -36,33 +39,53 @@ export default function InputComp({
   input,
   label,
   previewState,
+  categories,
 }: propsType) {
   function handleDrop(event: React.DragEvent<HTMLDivElement>) {
     event.preventDefault();
     const droppedFile = event.dataTransfer.files[0];
-    if (droppedFile && droppedFile.type.startsWith("image/")) {
+    if (!droppedFile) {
+      return;
+    }
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      if (previewState) {
+        previewState?.setter(reader.result as string);
+      }
       setAllInputs((prev) =>
         produce(prev, (draft) => {
-          draft[label].value = droppedFile;
+          draft["Food Image"].value = reader.result;
         })
       );
-      if (previewState) {
-        previewState.setter(URL.createObjectURL(droppedFile));
-      }
-    }
+    };
+    reader.readAsDataURL(droppedFile);
   }
   function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
     const selectedFile = event.target.files?.[0];
+    if (!selectedFile) {
+      return;
+    }
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      if (previewState) {
+        previewState?.setter(reader.result as string);
+      }
+      setAllInputs((prev) =>
+        produce(prev, (draft) => {
+          draft["Food Image"].value = reader.result;
+        })
+      );
+    };
+    reader.readAsDataURL(selectedFile);
+    /*
     if (selectedFile && selectedFile.type.startsWith("image/")) {
       setAllInputs((prev) =>
         produce(prev, (draft) => {
           draft[label].value = selectedFile;
         })
       );
-      if (previewState) {
-        previewState.setter(URL.createObjectURL(selectedFile));
-      }
     }
+      */
   }
   if (type == "text") {
     return (
@@ -104,6 +127,32 @@ export default function InputComp({
         >
           {input.error}
         </p>
+      </div>
+    );
+  } else if (type == "select") {
+    return (
+      <div className="flex flex-col gap-[8px] w-[100%]">
+        <Label htmlFor={label}>{label}</Label>
+        <select
+          id={label}
+          className="rounded-[6px] border border-[#E4E4E7] w-[100%] px-[10px] py-[8px] cursor-pointer"
+          onChange={(event) => {
+            console.log(event.target.value);
+            inputValueSetter(setAllInputs, label, event, type);
+          }}
+        >
+          {categories?.map((category, categoryIndex) => {
+            return (
+              <option
+                className="cursor-pointer"
+                key={categoryIndex}
+                value={category.categoryName}
+              >
+                {category.categoryName}
+              </option>
+            );
+          })}
+        </select>
       </div>
     );
   } else if (type == "image") {
