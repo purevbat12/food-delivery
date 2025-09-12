@@ -2,9 +2,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { produce } from "immer";
 import inputValueSetter from "../utils/inputValueSetter";
-import { useState, useEffect, Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { categoryType } from "../types";
-import Categories from "./categoryComponents/Categories";
 type propsType = {
   setAllInputs: Dispatch<
     SetStateAction<
@@ -41,51 +40,48 @@ export default function InputComp({
   previewState,
   categories,
 }: propsType) {
-  function handleDrop(event: React.DragEvent<HTMLDivElement>) {
+  async function handleDrop(event: React.DragEvent<HTMLDivElement>) {
     event.preventDefault();
     const droppedFile = event.dataTransfer.files[0];
     if (!droppedFile) {
       return;
     }
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      if (previewState) {
-        previewState?.setter(reader.result as string);
-      }
-      setAllInputs((prev) =>
-        produce(prev, (draft) => {
-          draft["Food Image"].value = reader.result;
-        })
-      );
-    };
-    reader.readAsDataURL(droppedFile);
+    const data = new FormData();
+    data.append("file", droppedFile);
+    data.append("upload_preset", "images");
+    const res = await fetch(`https://api.cloudinary.com/v1_1/dgziubc4h/image/upload`, {
+      method: "POST",
+      body: data
+    });
+    const uploadedImageURL = await res.json();
+    console.log(uploadedImageURL.url);
+    previewState?.setter(uploadedImageURL.url);
+    setAllInputs((prev) =>
+      produce(prev, (draft) => {
+        draft["Food Image"].value = uploadedImageURL.url;
+      })
+    );
   }
-  function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
+  async function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
     const selectedFile = event.target.files?.[0];
     if (!selectedFile) {
       return;
     }
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      if (previewState) {
-        previewState?.setter(reader.result as string);
-      }
-      setAllInputs((prev) =>
-        produce(prev, (draft) => {
-          draft["Food Image"].value = reader.result;
-        })
-      );
-    };
-    reader.readAsDataURL(selectedFile);
-    /*
-    if (selectedFile && selectedFile.type.startsWith("image/")) {
-      setAllInputs((prev) =>
-        produce(prev, (draft) => {
-          draft[label].value = selectedFile;
-        })
-      );
-    }
-      */
+    const data = new FormData();
+    data.append("file", selectedFile);
+    data.append("upload_preset", "images");
+    const res = await fetch(`https://api.cloudinary.com/v1_1/dgziubc4h/image/upload`, {
+      method: "POST",
+      body: data
+    });
+    const uploadedImageURL = await res.json();
+    console.log(uploadedImageURL.url);
+    previewState?.setter(uploadedImageURL.url);
+    setAllInputs((prev) =>
+      produce(prev, (draft) => {
+        draft["Food Image"].value = uploadedImageURL.url;
+      })
+    );
   }
   if (type == "text") {
     return (
@@ -135,6 +131,7 @@ export default function InputComp({
         <Label htmlFor={label}>{label}</Label>
         <select
           id={label}
+          value={""}
           className="rounded-[6px] border border-[#E4E4E7] w-[100%] px-[10px] py-[8px] cursor-pointer"
           onChange={(event) => {
             console.log(event.target.value);

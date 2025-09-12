@@ -8,7 +8,7 @@ import {
   updateFood,
   getFoodsByCategory,
   getAllFoodsByAllCategoriesObject,
-} from "../controllers/food";
+} from "../controllers";
 
 export const foodRouter = Router()
   .get("/get", getFood)

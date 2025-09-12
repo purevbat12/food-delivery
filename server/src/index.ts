@@ -1,6 +1,11 @@
 import express from "express";
 import { connectDatabase } from "./database";
-import { authRouter, foodCategoryRouter, foodRouter } from "./routers";
+import {
+  authRouter,
+  foodCategoryRouter,
+  foodRouter,
+  foodOrderRouter,
+} from "./routers";
 import { configDotenv } from "dotenv";
 import cors from "cors";
 
@@ -15,6 +20,7 @@ app.use(cors({ origin: "*" }));
 //app.options("*", cors());
 app.use("/auth", authRouter);
 app.use("/food-category", foodCategoryRouter);
+app.use("/food-order", foodOrderRouter);
 app.use("/food", foodRouter);
 app.listen(port, () => {
   console.log(`http://localhost:${port}`);

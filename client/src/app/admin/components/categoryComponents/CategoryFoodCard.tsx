@@ -36,7 +36,7 @@ export default function CategoryCard({
     "Food Category": { value: currentCategory, error: "", type: "select" },
     "Food Ingredients": { value: food.ingredients, error: "", type: "text" },
     "Food Price": { value: food.price, error: "", type: "number" },
-    "Food Image": { value: null, error: "", type: "image" },
+    "Food Image": { value: food.image, error: "", type: "image" },
   });
   const [updateFoodModalOpen, setUpdateFoodModalOpen] = useState(false);
   const [preview, setPreview] = useState<null | string>(food.image);

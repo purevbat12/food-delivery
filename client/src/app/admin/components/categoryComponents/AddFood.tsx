@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { categoryType } from "../../types";
-import { produce, current } from "immer";
+import { produce } from "immer";
 import InputComp from "../InputComp";
 import {
   Dialog,
@@ -35,7 +35,7 @@ export default function AddFood({
     "Food Name": { value: "", error: "", type: "text" },
     "Food Price": { value: "", error: "", type: "number" },
     "Food Ingredients": { value: "", error: "", type: "text" },
-    "Food Image File": { value: "", error: "", type: "image" },
+    "Food Image": { value: "", error: "", type: "image" },
   });
   function inputValidation() {
     let tempCount = 0;

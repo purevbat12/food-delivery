@@ -4,3 +4,4 @@ export * from "./sign-in.controller";
 export * from "./resetPasswordRequest.controller";
 export * from "./resetPasswordVerify.controller";
 export * from "./resetPassword.controller";
+export * from "./getAll";
