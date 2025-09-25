@@ -12,6 +12,5 @@ export const deleteCategory: RequestHandler = async (req, res) => {
     res.sendStatus(404);
     return;
   }
-  console.log("Deleted Successfully!");
   res.json({ message: "Deleted successfully!" });
 };

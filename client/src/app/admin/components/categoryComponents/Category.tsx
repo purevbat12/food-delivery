@@ -1,6 +1,6 @@
 import CategoryFoodCard from "./CategoryFoodCard";
 import { foodType, categoryType } from "../../types";
-import { useState, Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from "react";
 type propsType = {
   title: string;
   foods: foodType[];

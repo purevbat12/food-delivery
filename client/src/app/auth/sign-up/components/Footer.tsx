@@ -1,5 +1,7 @@
+"use client"
 import { Button } from "@/components/ui/button";
 import { produce } from "immer";
+import { useRouter } from "next/navigation";
 import { useState, useEffect, Dispatch, SetStateAction } from "react";
 import Link from "next/link";
 type allInputsType = Record<string, {value: unknown, error: string, type: string}>[];
@@ -8,6 +10,7 @@ type propsType = {
     allInputsState: {value: allInputsType, setter: Dispatch<SetStateAction<allInputsType>>};
 }
 export default function Footer({pageState, allInputsState}: propsType){
+    const router = useRouter();
     const [allUsers, setAllUsers] = useState<Record<string, {email: string}>[]>([]);
     useEffect(() => {
         console.log("Check");
@@ -136,7 +139,6 @@ export default function Footer({pageState, allInputsState}: propsType){
                     }));
                 }
                 if(valid){
-                    console.log(valid);
                     allInputsState.setter(prev => produce(prev, draft => {
                         draft[pageState.value][key].error = "";
                     }));
@@ -144,9 +146,6 @@ export default function Footer({pageState, allInputsState}: propsType){
                 }
             }
         }
-        console.log(allChecked);
-        console.log(Object.keys(allInputsState.value[pageState.value])[pageState.value]);
-        console.log(allChecked[Object.keys(allInputsState.value[pageState.value])[pageState.value]]);
         let count = 0;
         for(let i = 0; i < Object.keys(allChecked).length; i++){      
             if(allChecked[Object.keys(allChecked)[i]]){
@@ -186,8 +185,7 @@ export default function Footer({pageState, allInputsState}: propsType){
             <Button className="w-[100%] cursor-pointer" onClick={async () => {
                 if(inputValidation()){
                     if(pageState.value + 1 == Object.keys(allInputsState.value).length){
-                        console.log("All done!");
-                        await fetch(`http://locahlost:8000/auth/sign-up`, {
+                        await fetch(`http://localhost:8000/auth/sign-up`, {
                             method: "POST",
                             headers: {
                                 "Content-Type": "application/json"
@@ -201,8 +199,11 @@ export default function Footer({pageState, allInputsState}: propsType){
                             if(!response.ok){
                                 throw new Error("HTTP error! Status: " + response.status);
                             }
+                            console.log(response.json());
                         }).catch(err => {
                             console.error(err);
+                        }).finally(() => {
+                            router.push("/");
                         });
                     }
                     else{

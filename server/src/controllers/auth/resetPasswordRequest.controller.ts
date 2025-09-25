@@ -16,9 +16,9 @@ export const resetPasswordRequestController = async (
       res.status(404).send({ message: "User does not exist." });
       return;
     }
-    const token = await generateNewToken({ userId: user._id });
+    const token = await generateNewToken({ userId: user._id, email: email });
     sendUserVerificationLink(
-      `${req.protocol}://${req.get("host")}/auth/verify-user?token=${token}`,
+      `${process.env.FRONTEND_ENDPOINT}/auth/verify-email?emailToken=${token}`,
       email
     );
     res

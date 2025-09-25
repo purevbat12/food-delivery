@@ -74,6 +74,7 @@ export default function CategoryCard({
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem("token")}`,
         },
         body: JSON.stringify({
           id: id,
@@ -101,6 +102,7 @@ export default function CategoryCard({
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.getItem("token")}`,
       },
     })
       .then((response) => {

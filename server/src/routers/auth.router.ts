@@ -1,5 +1,6 @@
 import { Router } from "express";
-import { signupController, verifyUserController, signInController, resetPasswordRequestController, resetPasswordVerifyController, resetPasswordController, getAll } from "../controllers";
+import { signupController, verifyUserController, signInController, resetPasswordRequestController, resetPasswordVerifyController, resetPasswordController, getAll, getUser, verifyPassword, verifyEmail, updateUser } from "../controllers";
+import { authorization } from "../middleware";
 export const authRouter = Router();
 authRouter.route("/sign-up").post(signupController);
 authRouter.route("/sign-in").post(signInController);
@@ -8,3 +9,7 @@ authRouter.route("/reset-password-request").post(resetPasswordRequestController)
 authRouter.route("/reset-password-verify").get(resetPasswordVerifyController);
 authRouter.route("/reset-password").post(resetPasswordController);
 authRouter.route("/get-all").get(getAll);
+authRouter.route("/get/:id").get(getUser);
+authRouter.route("/verify-password").post(verifyPassword);
+authRouter.route("/verify-email").post(verifyEmail);
+authRouter.route("/update").put(authorization, updateUser);

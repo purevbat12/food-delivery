@@ -5,9 +5,10 @@ import {
   deleteCategory,
   updateCategory,
 } from "../controllers";
+import { authorization, authenticateUser } from "../middleware";
 export const foodCategoryRouter = Router()
-  .post("/create", createFoodCategory)
+  .post("/create", authorization, authenticateUser, createFoodCategory)
   .get("/get-all", getAllCategories)
-  .delete("/delete/:id", deleteCategory)
-  .put("/update", updateCategory);
+  .delete("/delete/:id", authorization, authenticateUser, deleteCategory)
+  .put("/update", authorization, authenticateUser, updateCategory);
 //   .get("/");

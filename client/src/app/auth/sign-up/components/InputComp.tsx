@@ -38,11 +38,11 @@ export default function InputComp({page, allInputsState}: propsType){
                                             draft[page][input].type = "password";
                                         }
                                     }));
-                                }} style={{display: input == "password" || input == "confirmPassword" ? "block" : "none"}} className="cursor-pointer translate-x-[-10px] rounded-[6px]">
-                                    <img className="h-[36px] w-[47px] rounded-[6px]"  src={allInputsState.value[page][input].type == "password" ? "/images/icons/show.PNG" : "/images/icons/hide.PNG"}></img>
+                                }} style={{borderColor: allInputsState.value[page][input].error != "" ? "#EF4444" : "#E4E4E7", display: input == "password" || input == "confirmPassword" ? "block" : "none"}} className="border cursor-pointer translate-x-[-10px] rounded-[6px]">
+                                    <img className="h-[34px] w-[47px] rounded-[6px]"  src={allInputsState.value[page][input].type == "password" ? "/images/icons/show.PNG" : "/images/icons/hide.PNG"}></img>
                                 </button>
                             </div>
-                            <p className="text-[#EF4444]" style={{display: allInputsState.value[page][input].error == "" ? "none" : "block"}}>{allInputsState.value[page][input].error}</p>
+                            <p className="text-[#EF4444] w-[275px]" style={{display: allInputsState.value[page][input].error == "" ? "none" : "block"}}>{allInputsState.value[page][input].error}</p>
                         </div>
                     );
                 })

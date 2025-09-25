@@ -1,4 +1,4 @@
-import { Model, model, models, Schema, StringSchemaDefinition } from "mongoose";
+import { Model, model, models, Schema } from "mongoose";
 
 type FoodType = {
   foodName: string;

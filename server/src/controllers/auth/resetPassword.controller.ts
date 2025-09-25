@@ -13,7 +13,7 @@ export const resetPasswordController = async (req: Request, res: Response) => {
             res.status(400).send({ message: "User does not exist." });
             return;
         }
-        user.password = await encryptHash(newPassword);
+        user.password = encryptHash(newPassword);
         await user.save();
         res.status(200).send({ message: "Password reset successfully." });
     }

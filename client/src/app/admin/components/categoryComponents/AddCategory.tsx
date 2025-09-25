@@ -66,6 +66,7 @@ export default function AddCategory({ rerenderState, categories }: propsType) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem("token")}`,
         },
         body: JSON.stringify({
           categoryName: categoryName,

@@ -6,6 +6,7 @@ type FoodOrderSchemaType = {
     food: Schema.Types.ObjectId;
     quantity: number;
   }>;
+  status: "Pending" | "Canceled" | "Delivered";
 };
 type FoodOrderItemSchemaType = {
   food: Schema.Types.ObjectId;
@@ -37,6 +38,11 @@ const foodOrder = new Schema<FoodOrderSchemaType>({
   },
   foodOrderItems: {
     type: [foodOrderItemSchema],
+    required: true,
+  },
+  status: {
+    type: String,
+    enum: ["Pending", "Canceled", "Delivered"],
     required: true,
   },
 });

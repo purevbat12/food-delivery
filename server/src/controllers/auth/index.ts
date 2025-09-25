@@ -5,3 +5,7 @@ export * from "./resetPasswordRequest.controller";
 export * from "./resetPasswordVerify.controller";
 export * from "./resetPassword.controller";
 export * from "./getAll";
+export * from "./getUser";
+export * from "./verifyPassword";
+export * from "./verify-email";
+export * from "./updateUser";
