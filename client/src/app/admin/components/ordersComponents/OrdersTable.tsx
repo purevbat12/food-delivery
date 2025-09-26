@@ -22,7 +22,6 @@ export const OrdersTable = () => {
         }
         return response.json();
       }).then(data => {
-        console.log(data.orders);
         setOrders(data.orders);
       }).catch(err => {
         console.error(err);
@@ -43,7 +42,6 @@ export const OrdersTable = () => {
         }
         return response.json();
       }).then(data => {
-        console.log(data);
         setUsers(data);
       }).catch(err => {
         console.error(err);

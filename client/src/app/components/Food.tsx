@@ -1,15 +1,9 @@
 "use client"
 import { foodType, cartType } from "../types";
 import jwt from "jsonwebtoken";
-import { produce } from "immer";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
@@ -26,10 +20,9 @@ export default function FoodCard({food, rerenderState}: propsType){
     const [foodCount, setFoodCount] = useState(0);
     const [cart, setCart] = useState<cartType>();
     useEffect(() => {
-        let token = localStorage.getItem("token") as string;
-        let decoded = jwt.decode(token) as {userId: string};
+        const token = localStorage.getItem("token") as string;
+        const decoded = jwt.decode(token) as {userId: string};
         async function getCart(){
-            console.log(decoded.userId);
             await fetch(`http://localhost:8000/food-cart/get/${decoded.userId}`, {
                 method: "GET",
                 headers: {
@@ -50,10 +43,8 @@ export default function FoodCard({food, rerenderState}: propsType){
         getCart();
     }, [rerenderState.value]);
     async function addToCart(){
-        let newCartItems = (cart as cartType).cartItems;
+        const newCartItems = (cart as cartType).cartItems;
         newCartItems?.push({food: food._id, quantity: foodCount});
-        console.log("newCartItems = ");
-        console.log(newCartItems);
         await fetch(`http://localhost:8000/food-cart/update`, {
             method: "PUT",
             headers: {

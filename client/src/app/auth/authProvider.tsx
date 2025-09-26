@@ -1,7 +1,14 @@
 "use client"
-import { createContext, useContext, useState, useEffect } from "react";
-const AuthContext = createContext<any>(null);
-export function AuthProvider({ children }: any){
+import { createContext, useContext, useState, useEffect, ReactNode, Dispatch, SetStateAction } from "react";
+interface contextType {
+  token: string | null;
+  setToken: Dispatch<SetStateAction<string | null>>;
+}
+const AuthContext = createContext<contextType | null>(null);
+type propsType = {
+  children: ReactNode;
+}
+export function AuthProvider({ children }: propsType){
   const [token, setToken] = useState<string | null>(null);
   useEffect(() => {
     setToken(localStorage.getItem("token"));

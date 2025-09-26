@@ -1,6 +1,10 @@
 "use client"
-import { createContext, useContext, useState, useEffect, useRef } from "react";
-const EmailContext = createContext<any>(null);
+import { createContext, useContext, useState, useEffect, useRef, Dispatch, SetStateAction } from "react";
+interface contextType {
+  emailToken: string | null;
+  setEmailToken: Dispatch<SetStateAction<string | null>>;
+}
+const EmailContext = createContext<contextType| null>(null);
 export function EmailVerify({ children }: any){
     const [emailToken, setEmailToken] = useState<string | null>(null);
     const channelRef = useRef<BroadcastChannel | null>(null);

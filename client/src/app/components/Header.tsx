@@ -6,7 +6,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogClose,
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input";
@@ -56,7 +55,6 @@ export default function Header({user, rerenderState, cardModalIsOpenState, deliv
         }).catch(err => {
             console.error(err);
         }).finally(() => {
-            console.log("Deliver address updated!");
             setIsEmptyState(false);
             setDeliveryLocation("");
             deliveryLocationModalIsOpenState.setter(false);

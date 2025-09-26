@@ -16,11 +16,9 @@ import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogFooter,
-  DialogClose,
   DialogTrigger,
 } from "@/components/ui/dialog";
 export default function CategoryCard({
@@ -91,7 +89,6 @@ export default function CategoryCard({
         if (!response.ok) {
           throw new Error("HTTP error! Status " + response.status);
         }
-        console.log(response.json());
       })
       .catch((err) => {
         console.error(err);
@@ -156,7 +153,6 @@ export default function CategoryCard({
               <Button
                 className="cursor-pointer"
                 onClick={() => {
-                  console.log(food._id);
                   deleteFood(food._id);
                 }}
               >

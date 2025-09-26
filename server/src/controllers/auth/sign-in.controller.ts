@@ -19,7 +19,6 @@ export const signInController = async (req: Request, res: Response) => {
             return;
         }
         const token = generateNewToken({ userId: user._id });
-        console.log(token);
         res.status(200).send({ message: "Successfully logged in.", token: token, user: user });
     } 
     catch (error){

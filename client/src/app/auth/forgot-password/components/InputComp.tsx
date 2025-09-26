@@ -26,7 +26,6 @@ export default function InputComp({page, allInputsState}: propsType){
                                                     email: allInputsState.value[0]["email"].value
                                                 })
                                             }).then(response => {
-                                                console.log(response);
                                                 if(!response.ok){
                                                     throw new Error("HTTP error! Status: " + response.status);
                                                 }

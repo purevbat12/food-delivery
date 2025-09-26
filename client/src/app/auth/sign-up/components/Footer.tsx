@@ -13,7 +13,6 @@ export default function Footer({pageState, allInputsState}: propsType){
     const router = useRouter();
     const [allUsers, setAllUsers] = useState<Record<string, {email: string}>[]>([]);
     useEffect(() => {
-        console.log("Check");
         async function getAllUsers(){
             await fetch(`http://localhost:8000/auth/get-all`, {
                 method: "GET",
@@ -26,7 +25,6 @@ export default function Footer({pageState, allInputsState}: propsType){
                 }
                 return response.json();
             }).then(data => {
-                console.log(data);
                 setAllUsers(data);
             }).catch(err => {
                 console.error(err);
@@ -35,7 +33,7 @@ export default function Footer({pageState, allInputsState}: propsType){
         getAllUsers();
     }, []);
     function customChecks(){
-        let allChecked: Record<string, boolean> = {};
+        const allChecked: Record<string, boolean> = {};
         let overall = false;
         for(let i = 0; i < Object.keys(allInputsState.value[pageState.value]).length; i++){
             allChecked[Object.keys(allInputsState.value[pageState.value])[i]] = false;
@@ -77,13 +75,13 @@ export default function Footer({pageState, allInputsState}: propsType){
                 if(splat[0][0] == "." || splat[0][splat[0].length - 1] == "."){
                     valid = false;
                     allInputsState.setter(prev => produce(prev, draft => {
-                        draft[pageState.value][key].error = "Local part of email cannot have a '.' for start or end.";
+                        draft[pageState.value][key].error = "Local part of email cannot have a &apos;.&apos; for start or end.";
                     }));
                 }
                 if(!splat[1].includes(".")){
                     valid = false;
                     allInputsState.setter(prev => produce(prev, draft => {
-                        draft[pageState.value][key].error = "Email missing '.'";
+                        draft[pageState.value][key].error = "Email missing &apos;.&apos;";
                     }));
                 }
                 const splatDot = splat[1].split(".");
@@ -130,7 +128,6 @@ export default function Footer({pageState, allInputsState}: propsType){
                 }
             }
             if(Object.keys(allInputsState.value[pageState.value])[i] == "confirmPassword"){
-                console.log("confirm password");
                 let valid = true;
                 if(allInputsState.value[pageState.value].password.value != allInputsState.value[pageState.value][key].value){
                     valid = false;
@@ -199,7 +196,6 @@ export default function Footer({pageState, allInputsState}: propsType){
                             if(!response.ok){
                                 throw new Error("HTTP error! Status: " + response.status);
                             }
-                            console.log(response.json());
                         }).catch(err => {
                             console.error(err);
                         }).finally(() => {

@@ -12,7 +12,6 @@ type propsType = {
 export default function Statuses({pressedStatusState, order, rerenderState}: propsType){
     const statuses = ["Delivered", "Pending", "Canceled"];
     async function updateStatus(status: string){
-        console.log("Update");
         await fetch(`http://localhost:8000/food-order/update`, {
             method: "PUT",
             headers: {
@@ -41,7 +40,7 @@ export default function Statuses({pressedStatusState, order, rerenderState}: pro
             {
                 statuses.map((status, statusIndex) => {
                     return (
-                        <button onClick={() => {
+                        <button key={statusIndex} onClick={() => {
                             updateStatus(status);
                         }} className="pl-[8px] pr-[53px] py-[8px] cursor-pointer">
                             <span key={statusIndex} className="rounded-[9999px] bg-[#F4F4F5] py-[2px] px-[10px] text-[#18181B] text-[12px] font-[500]">{status}</span>

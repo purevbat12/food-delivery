@@ -1,6 +1,5 @@
 "use client"
 import { useState, useEffect } from "react";
-import { produce } from "immer";
 import { foodType } from "../types";
 type propsType = {
     cartItem: {food: string, quantity: number};
@@ -10,7 +9,6 @@ export default function CartItem({cartItem}: propsType){
     const [foods, setFoods] = useState<foodType[]>([]);
     useEffect(() => {
         async function getFoods(){
-            console.log("In getFoods function");
             await fetch(`http://localhost:8000/food/get-all`, {
                 method: "GET",
                 headers: {
@@ -32,12 +30,7 @@ export default function CartItem({cartItem}: propsType){
             return food._id == cartItem.food;
         });
         setFoods(results);
-        console.log(results);
     }, [allFoods])
-    useEffect(() => {
-        console.log("foods = ");
-        console.log(foods);
-    }, [foods]);
     return (
         <div>
             <img src="" className=""></img>

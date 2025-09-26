@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { produce } from "immer";
-import { useState, useEffect, Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from "react";
 import Link from "next/link";
 type allInputsType = Record<string, {value: unknown, error: string, type: string}>[];
 type propsType = {
@@ -13,36 +13,14 @@ export default function Footer({pageState, allInputsState}: propsType){
     if(Object.keys(allInputsState.value[pageState.value]).includes("emailVerification")){
         return <></>;
     }
-    const [allUsers, setAllUsers] = useState<Record<string, {email: string, password: string}>[]>([]);
     const router = useRouter();
-    useEffect(() => {
-        async function getAllUsers(){
-            await fetch(`http://localhost:8000/auth/get-all`, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            }).then(response => {
-                if(!response.ok){
-                    throw new Error("HTTP error! Status: " + response.status);
-                }
-                return response.json();
-            }).then(data => {
-                setAllUsers(data);
-            }).catch(err => {
-                console.error(err);
-            });
-        }
-        getAllUsers();
-    }, []);
     async function customChecks(){
-        let allChecked: Record<string, boolean> = {};
+        const allChecked: Record<string, boolean> = {};
         let overall = false;
         for(let i = 0; i < Object.keys(allInputsState.value[pageState.value]).length; i++){
             allChecked[Object.keys(allInputsState.value[pageState.value])[i]] = false;
             const currentInputs = allInputsState.value[pageState.value];
             const key = Object.keys(currentInputs)[i] as keyof typeof currentInputs;
-            console.log(key);
             if(Object.keys(allInputsState.value[pageState.value])[i] == "email"){
                 let valid = true;
                 if(!(allInputsState.value[pageState.value][key].value as string).includes("@")){ 
@@ -55,13 +33,13 @@ export default function Footer({pageState, allInputsState}: propsType){
                 if(splat[0][0] == "." || splat[0][splat[0].length - 1] == "."){
                     valid = false;
                     allInputsState.setter(prev => produce(prev, draft => {
-                        draft[pageState.value][key].error = "Local part of email cannot have a '.' for start or end.";
+                        draft[pageState.value][key].error = "Local part of email cannot have a &apos;.&apos; for start or end.";
                     }));
                 }
                 if(!splat[1].includes(".")){
                     valid = false;
                     allInputsState.setter(prev => produce(prev, draft => {
-                        draft[pageState.value][key].error = "Email missing '.'";
+                        draft[pageState.value][key].error = "Email missing &apos;.&apos;";
                     }));
                 }
                 const splatDot = splat[1].split(".");
@@ -71,7 +49,6 @@ export default function Footer({pageState, allInputsState}: propsType){
                         draft[pageState.value][key].error = "Email must have complete domain.";
                     }));
                 }
-                console.log("Email valid: " + valid);
                 if(valid){
                     allInputsState.setter(prev => produce(prev, draft => {
                         draft[pageState.value][key].error = "";
@@ -110,7 +87,6 @@ export default function Footer({pageState, allInputsState}: propsType){
             }
             if(Object.keys(allInputsState.value[pageState.value])[i] == "confirmPassword"){
                 let valid = true;
-                console.log(allInputsState.value[pageState.value][key].value + " ==? " + allInputsState.value[2]["password"].value);
                 if(allInputsState.value[pageState.value][key].value != allInputsState.value[2]["password"].value){
                     valid = false;
                     allInputsState.setter(prev => produce(prev, draft => {
@@ -134,7 +110,6 @@ export default function Footer({pageState, allInputsState}: propsType){
         if(count == Object.keys(allChecked).length){
             overall = true;
         }
-        console.log(overall);
         return overall;
     }
     function isEmpty(){
@@ -165,7 +140,6 @@ export default function Footer({pageState, allInputsState}: propsType){
         <div className="flex flex-col gap-[24px]">
             <Button className="w-[100%] cursor-pointer" onClick={async () => {
                 const valid = await inputValidation();
-                console.log("valid = ", valid);
                 if(valid){
                     if(pageState.value + 1 == Object.keys(allInputsState.value).length){
                         await fetch(`http://localhost:8000/auth/reset-password`, {
@@ -197,4 +171,3 @@ export default function Footer({pageState, allInputsState}: propsType){
         </div>
     );
 }
-//"When i have achieved my life goals and am done with my human life maybe then i could. But right now i am still young."  "No, no i am not really considering giving up my human life. I think i would find the lack of human amenities a bit unbearable."

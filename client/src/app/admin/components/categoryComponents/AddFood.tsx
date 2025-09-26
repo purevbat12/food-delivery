@@ -6,11 +6,9 @@ import InputComp from "../InputComp";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogFooter,
-  DialogClose,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useState, useEffect, Dispatch, SetStateAction } from "react";
@@ -71,21 +69,15 @@ export default function AddFood({
     foodIngredients: string,
     foodImage: string
   ) {
-    console.log(foodImage);
     if (inputValidation()) {
       setAddFoodModalOpen(false);
       let _id = "";
-      console.log(categories);
       for (let i = 0; i < categories.length; i++) {
         if (title == categories[i].categoryName) {
           _id = categories[i]._id;
-          console.log(`${title} == ${categories[i]._id}`);
           break;
-        } else {
-          console.log(title + " != " + categories[i].categoryName);
-        }
+        } 
       }
-      console.log(_id);
       await fetch(`http://localhost:8000/food/create`, {
         method: "POST",
         headers: {

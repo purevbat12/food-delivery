@@ -13,7 +13,6 @@ export default function Footer({pageState, allInputsState}: propsType){
     const router = useRouter();
     const [allUsers, setAllUsers] = useState<Record<string, {email: string, password: string}>[]>([]);
     useEffect(() => {
-        console.log("Check");
         async function getAllUsers(){
             await fetch(`http://localhost:8000/auth/get-all`, {
                 method: "GET",
@@ -26,7 +25,6 @@ export default function Footer({pageState, allInputsState}: propsType){
                 }
                 return response.json();
             }).then(data => {
-                console.log(data);
                 setAllUsers(data);
             }).catch(err => {
                 console.error(err);
@@ -35,9 +33,8 @@ export default function Footer({pageState, allInputsState}: propsType){
         getAllUsers();
     }, []);
     async function customChecks(){
-        let allChecked: Record<string, boolean> = {};
+        const allChecked: Record<string, boolean> = {};
         let overall = false;
-        let user: Record<string, {email: string, password: string}> = {};
         for(let i = 0; i < Object.keys(allInputsState.value[pageState.value]).length; i++){
             allChecked[Object.keys(allInputsState.value[pageState.value])[i]] = false;
             const currentInputs = allInputsState.value[pageState.value];
@@ -54,7 +51,7 @@ export default function Footer({pageState, allInputsState}: propsType){
                 if(splat[0][0] == "." || splat[0][splat[0].length - 1] == "."){
                     valid = false;
                     allInputsState.setter(prev => produce(prev, draft => {
-                        draft[pageState.value][key].error = "Local part of email cannot have a '.' for start or end.";
+                        draft[pageState.value][key].error = "Local part of email cannot have a &apos;.&apos; for start or end.";
                     }));
                 }
                 if(!splat[1].includes(".")){
@@ -73,7 +70,6 @@ export default function Footer({pageState, allInputsState}: propsType){
                 let userExists = false;
                 for(let i = 0; i < allUsers.length; i++){
                     if(allUsers[i].email == allInputsState.value[pageState.value][key].value){
-                        user = allUsers[i];
                         userExists = true;
                         break;
                     }
@@ -109,12 +105,10 @@ export default function Footer({pageState, allInputsState}: propsType){
                     }
                     return response.json();
                 }).then(data => {
-                    console.log(data);
                     isValid = data.valid;
                 }).catch(err => {
                     console.error(err);
                 });
-                console.log("Password is valid: " + isValid);
                 if(!isValid){
                     valid = false;
                     allInputsState.setter(prev => produce(prev, draft => {
@@ -184,8 +178,6 @@ export default function Footer({pageState, allInputsState}: propsType){
                             }
                             return response.json();
                         }).then(data => {
-                            console.log("data: ");
-                            console.log(data);
                             localStorage.setItem("token", data.token);
                         })
                         .catch(err => {

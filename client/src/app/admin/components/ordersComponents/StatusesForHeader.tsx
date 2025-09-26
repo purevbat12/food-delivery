@@ -1,6 +1,5 @@
 "use client"
 import { Dispatch, SetStateAction } from "react";
-import { orderType } from "../../types";
 type propsType = {
     pressedStatusState: {
         value: boolean;
@@ -45,7 +44,7 @@ export default function StatusesForHeader({pressedStatusState, orders, rerenderS
             {
                 statuses.map((status, statusIndex) => {
                     return (
-                        <button onClick={() => {
+                        <button key={statusIndex} onClick={() => {
                             updateStatus(status);
                         }} className="pl-[8px] pr-[53px] py-[8px] cursor-pointer">
                             <span key={statusIndex} className="rounded-[9999px] bg-[#F4F4F5] py-[2px] px-[10px] text-[#18181B] text-[12px] font-[500]">{status}</span>

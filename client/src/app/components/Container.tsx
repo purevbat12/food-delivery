@@ -15,7 +15,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog"
 import {Button} from "@/components/ui/button";
 export default function Container(){
@@ -67,7 +66,7 @@ export default function Container(){
         getFoods();
     }, []);
     async function createOrder(){
-        let foodOrderItems: {food: string, quantity: number}[] = cart?.cartItems as {food: string, quantity: number}[];
+        const foodOrderItems: {food: string, quantity: number}[] = cart?.cartItems as {food: string, quantity: number}[];
         if(!cart?.cartItems){
             return;
         }
@@ -147,7 +146,6 @@ export default function Container(){
                 if(data.message != "No orders placed on this user!"){ 
                     setMountedOrder(true);
                 }
-                console.log(data);
                 setOrders(data);
             }).catch(err => {
                 console.error(err);
@@ -179,7 +177,6 @@ export default function Container(){
             });
         }
         if(user){
-            console.log("User is okay");
             getCart();
             getOrders();
         }
@@ -331,7 +328,7 @@ export default function Container(){
                                                                             <p>{results[0].ingredients}</p>
                                                                         </div>
                                                                         <button onClick={() => {
-                                                                            let newCartItems = cart.cartItems;
+                                                                            const newCartItems = cart.cartItems;
                                                                             newCartItems.splice(cartItemIndex, 1);
                                                                             updateCart(cart._id, {cartItems: newCartItems});
                                                                         }} className="border rounded-[100%] w-[36px] h-[36px] border-[#EF4444] text-[#EF4444] cursor-pointer">✕</button>
@@ -342,13 +339,13 @@ export default function Container(){
                                                                                 if(cartItem.quantity == 1){
                                                                                     return;
                                                                                 }
-                                                                                let newCartItems = cart.cartItems;
+                                                                                const newCartItems = cart.cartItems;
                                                                                 newCartItems[cartItemIndex].quantity -= 1;
                                                                                 updateCart(cart._id, {cartItems: newCartItems});
                                                                             }} className="border-none text-[20px] font-[600] cursor-pointer">-</button>
                                                                             <p className="font-[600] mx-[5px] text-[18px]">{cartItem.quantity}</p>
                                                                             <button onClick={() => {
-                                                                                let newCartItems = cart.cartItems;
+                                                                                const newCartItems = cart.cartItems;
                                                                                 newCartItems[cartItemIndex].quantity += 1;
                                                                                 updateCart(cart._id, {cartItems: newCartItems});
                                                                             }} className="border-none text-[20px] font-[600] cursor-pointer">+</button>
@@ -457,7 +454,7 @@ export default function Container(){
                                             ) : (
                                                 <div className="bg-[#F4F4F5] rounded-[12px] w-[439px] h-[182px] flex flex-col justify-center items-center px-[40px]">
                                                     <h2 className="text-[#09090B] text-[16px] font-[700]">No orders yet?</h2>
-                                                    <p className="text-[#71717A] text-[12px] font-[400] text-center">You haven't placed any orders yet. Start exploring our menu and satisfy your cravings!</p>
+                                                    <p className="text-[#71717A] text-[12px] font-[400] text-center">You haven&apos;t placed any orders yet. Start exploring our menu and satisfy your cravings!</p>
                                                 </div>
                                             )
                                         }

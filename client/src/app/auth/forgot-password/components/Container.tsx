@@ -26,13 +26,11 @@ export default function Inputs(){
         });
     }
     useEffect(() => {
-        console.log(page);
         if(page == 1){
             sendRequest();
         } 
     }, [page]);
     useEffect(() => {
-        console.log(emailToken);
         if(emailToken && page == 1){
             setPage(page + 1);
         }

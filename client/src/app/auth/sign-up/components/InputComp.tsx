@@ -1,5 +1,5 @@
 import { Input } from "@/components/ui/input";
-import { produce, current } from "immer";
+import { produce } from "immer";
 import { Dispatch, SetStateAction } from "react";
 type allInputsType = Record<string, {value: unknown, error: string, type: string}>[];
 type propsType = {
@@ -16,7 +16,7 @@ export default function InputComp({page, allInputsState}: propsType){
                             <div className="flex">
                                 <Input style={{borderColor: allInputsState.value[page][input].error != "" ? "#EF4444" : "#E4E4E7", backgroundColor: "#F1F3F2"}} onChange={(event) => {
                                     if(input == "phone number"){
-                                        let lastCharacter = event.target.value.slice(event.target.value.length - 1);
+                                        const lastCharacter = event.target.value.slice(event.target.value.length - 1);
                                         if(event.target.value.length <= 8 && !isNaN(Number(lastCharacter))){
                                             allInputsState.setter(prev => produce(prev, draft => {
                                                 draft[page][input].value = event.target.value;
