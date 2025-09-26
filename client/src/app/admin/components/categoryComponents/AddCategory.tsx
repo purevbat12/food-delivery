@@ -23,6 +23,12 @@ export default function AddCategory({ rerenderState, categories }: propsType) {
   >({
     "Category Name": { value: "", error: "", type: "text" },
   });
+  const [token, setToken] = useState<string | null>(null);
+  useEffect(() => {
+    if(localStorage.getItem("token")){
+      setToken(localStorage.getItem("token"));
+    }
+  }, []);
   const [addModalOpen, setAddModalOpen] = useState(false);
   function inputValidationAdd(): boolean {
     let tempCount = 0;
@@ -65,7 +71,7 @@ export default function AddCategory({ rerenderState, categories }: propsType) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${localStorage.getItem("token")}`,
+          "Authorization": `Bearer ${token}`,
         },
         body: JSON.stringify({
           categoryName: categoryName,

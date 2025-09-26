@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import { useRouter } from "next/navigation";
 import { userType, cartType, foodType, orderType } from "../types";
 import { useEmailVerify } from "../auth/emailVerify";
+import { useAuth } from "../auth/authProvider";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
@@ -16,8 +17,9 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
-import {Button} from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 export default function Container(){
+    const { token } = useAuth();
     const [cart, setCart] = useState<cartType>();
     const [orders, setOrders] = useState<orderType[]>([]); 
     const [orderedModalIsOpen, setOrderedModalIsOpen] = useState(false);
@@ -74,7 +76,7 @@ export default function Container(){
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${localStorage.getItem("token")}`
+                "Authorization": `Bearer ${token}`
             },
             body: JSON.stringify({
                 user: user?._id,
@@ -95,7 +97,7 @@ export default function Container(){
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${localStorage.getItem("token")}`
+                "Authorization": `Bearer ${token}`
             },
             body: JSON.stringify({
                 userId: user?._id
@@ -113,7 +115,7 @@ export default function Container(){
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${localStorage.getItem("token")}`
+                "Authorization": `Bearer ${token}`
             },
             body: JSON.stringify({
                 id: id,
@@ -135,7 +137,7 @@ export default function Container(){
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${localStorage.getItem("token")}`
+                    "Authorization": `Bearer ${token}`
                 }
             }).then(response => {
                 if(!response.ok){
@@ -156,7 +158,7 @@ export default function Container(){
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${localStorage.getItem("token")}`
+                    "Authorization": `Bearer ${token}`
                 }
             }).then(response => {
                 if(!response.ok){
@@ -189,7 +191,7 @@ export default function Container(){
             },
             body: JSON.stringify({
                 email: user?.email,
-                token: localStorage.getItem("token")
+                token: token
             })
         }).then(response => {
             if(!response.ok){
@@ -253,6 +255,10 @@ export default function Container(){
             }
         }
     }, [user]);
+    if(user && user?.role != "User"){
+        console.log("Not user");
+        router.push("/admin");
+    }
     if(!signedIn){
         return (
             <div className="w-[100vw] h-[100vh] bg-[#000000] flex justify-center items-center">

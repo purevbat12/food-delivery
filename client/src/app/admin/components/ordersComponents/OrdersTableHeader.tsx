@@ -1,3 +1,4 @@
+"use client"
 import { orderType } from "../../types";
 import { useState, Dispatch, SetStateAction } from "react";
 import StatusesForHeader from "./StatusesForHeader";

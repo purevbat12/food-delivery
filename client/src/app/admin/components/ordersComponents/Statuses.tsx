@@ -1,5 +1,5 @@
 "use client"
-import { Dispatch, SetStateAction } from "react";
+import { useState, useEffect, Dispatch, SetStateAction } from "react";
 import { orderType } from "../../types";
 type propsType = {
     pressedStatusState: {
@@ -11,12 +11,18 @@ type propsType = {
 };
 export default function Statuses({pressedStatusState, order, rerenderState}: propsType){
     const statuses = ["Delivered", "Pending", "Canceled"];
+    const [token, setToken] = useState<string | null>(null);
+    useEffect(() => {
+        if(localStorage.getItem("token")){
+        setToken(localStorage.getItem("token"));
+        }
+    }, []);
     async function updateStatus(status: string){
         await fetch(`http://localhost:8000/food-order/update`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${localStorage.getItem("token")}`,
+                "Authorization": `Bearer ${token}`,
             },
             body: JSON.stringify({
                 id: order._id,
@@ -26,7 +32,7 @@ export default function Statuses({pressedStatusState, order, rerenderState}: pro
             })
         }).then(response => {
             if(!response.ok){
-                throw new Error("HTTP error! Status: " + response.status);
+                throw new Error("HTTP error! Status: " + response.status + " In updateStatus");
             }
         }).catch(err => {
             console.error(err);

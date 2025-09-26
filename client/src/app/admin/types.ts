@@ -14,7 +14,7 @@ export type orderType = {
   _id: string;
   user: string;
   totalPrice: number;
-  foodOrderItems: foodType[];
+  foodOrderItems: {food: string, quantity: number}[];
   status: "Pending" | "Canceled" | "Delivered";
 }
 export type userType = {
@@ -22,7 +22,7 @@ export type userType = {
     email: string;
     password: string;
     isVerified: boolean;
-    orderedFoods: foodType[];
+    orderedFoods: string[];
     phoneNumber: string;
     role: string;
 }

@@ -1,3 +1,4 @@
+"use client"
 import Logo from "./Logo";
 import { Dispatch, SetStateAction } from "react";
 type propsType = {

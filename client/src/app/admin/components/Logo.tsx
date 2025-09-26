@@ -1,4 +1,5 @@
-export default function Logo() {
+"use client"
+export default function Logo(){
   return (
     <div className="flex gap-[8px]">
       <img src="./images/icons/Logo.png"></img>

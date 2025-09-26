@@ -31,7 +31,7 @@ export default function Orders({orders, users, rerenderState, setCountOfCheckedO
     <div className="border border-[#E4E4E7]" style={{borderRadius: "0px 0px 16px 16px"}}> 
       <div className="flex bg-[#F4F4F5CC] border border-[#E4E4E7] h-[54px] flex items-center">
         <div className="w-[48px] ml-[16px]">
-          <input type="checkbox" onClick={(event) => {
+          <input type="checkbox" onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
             setAllChecked(!allChecked);
             if(event.target.checked){
               setCheckedOrders(prev => produce(prev, draft => {

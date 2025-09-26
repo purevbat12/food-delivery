@@ -6,17 +6,23 @@ type propsType = {
 }
 export default function Food({foodId}: propsType){
     const [food, setFood] = useState<foodType>();
+    const [token, setToken] = useState<string | null>(null);
+    useEffect(() => {
+        if(localStorage.getItem("token")){
+        setToken(localStorage.getItem("token"));
+        }
+    }, []);
     useEffect(() => {
         async function getFood(){
             await fetch(`http://localhost:8000/food/get/${foodId.food}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${localStorage.getItem("token")}`,
+                    "Authorization": `Bearer ${token}`,
                 }
             }).then(response => {
                 if(!response.ok){
-                    throw new Error("HTTP error! Status: " + response.status);
+                    throw new Error("HTTP error! Status: " + response.status + " In getFood");
                 }
                 return response.json();
             }).then(data => {

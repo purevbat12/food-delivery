@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input";
 import { userType } from "../types";
+import { useAuth } from "../auth/authProvider";
 type propsType = {
     user: userType;
     rerenderState: {
@@ -28,6 +29,7 @@ type propsType = {
 export default function Header({user, rerenderState, cardModalIsOpenState, deliveryLocationModalIsOpenState}: propsType){
     const [deliveryLocation, setDeliveryLocation] = useState("");
     const [isEmptyState, setIsEmptyState] = useState(false);
+    const { token } = useAuth();
     function isEmpty(){
         if(deliveryLocation.length == 0){
             setIsEmptyState(true);
@@ -40,7 +42,7 @@ export default function Header({user, rerenderState, cardModalIsOpenState, deliv
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${localStorage.getItem("token")}`,
+                "Authorization": `Bearer ${token}`,
             },
             body: JSON.stringify({
                 id: user._id,

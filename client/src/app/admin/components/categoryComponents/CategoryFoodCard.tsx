@@ -10,7 +10,7 @@ type propsType = {
   };
   currentCategory: string;
 };
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import InputComp from "../InputComp";
 import { Button } from "@/components/ui/button";
 import {
@@ -38,6 +38,12 @@ export default function CategoryCard({
   });
   const [updateFoodModalOpen, setUpdateFoodModalOpen] = useState(false);
   const [preview, setPreview] = useState<null | string>(food.image);
+  const [token, setToken] = useState<string | null>(null);
+  useEffect(() => {
+    if(localStorage.getItem("token")){
+      setToken(localStorage.getItem("token"));
+    }
+  }, []);
   async function updateFood(id: string) {
     let categoryId = "";
     for (let i = 0; i < categories.length; i++) {
@@ -50,7 +56,7 @@ export default function CategoryCard({
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorage.getItem("token")}`,
+        "Authorization": `Bearer ${token}`,
       },
       body: JSON.stringify({
         id: id,
@@ -82,7 +88,7 @@ export default function CategoryCard({
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorage.getItem("token")}`,
+        "Authorization": `Bearer ${token}`,
       },
     })
       .then((response) => {

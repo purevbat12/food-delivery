@@ -1,3 +1,4 @@
+"use client"
 import { userType, orderType } from "../../types";
 import { useState, Dispatch, SetStateAction } from "react";
 import Foods from "./Foods";
@@ -25,7 +26,7 @@ export default function Order({order, orderNumber, user, checkedOrdersState, rer
   return (
       <div className="flex bg-[#F4F4F5CC] border border-[#E4E4E7] h-[54px] flex items-center">
         <div className="w-[48px] ml-[16px]">
-          <input onClick={(event) => {
+          <input onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
             if(event.target.checked){
               checkedOrdersState.setter(prev => produce(prev, draft => {
                 draft.push(order._id);

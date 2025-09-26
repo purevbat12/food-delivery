@@ -8,6 +8,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { Dispatch, SetStateAction } from "react";
+import { useAuth } from "../auth/authProvider";
 type propsType = {
     food: foodType;
     rerenderState: {
@@ -17,6 +18,7 @@ type propsType = {
 }
 export default function FoodCard({food, rerenderState}: propsType){
     const [addOrderModalIsOpen, setAddOrderModalIsOpen] = useState(false);
+    const { token } = useAuth();
     const [foodCount, setFoodCount] = useState(0);
     const [cart, setCart] = useState<cartType>();
     useEffect(() => {
@@ -27,7 +29,7 @@ export default function FoodCard({food, rerenderState}: propsType){
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${localStorage.getItem("token")}`
+                    "Authorization": `Bearer ${token}`
                 }
             }).then(response => {
                 if(!response.ok){
@@ -49,7 +51,7 @@ export default function FoodCard({food, rerenderState}: propsType){
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${localStorage.getItem("token")}`
+                "Authorization": `Bearer ${token}`
             },
             body: JSON.stringify({
                 id: cart?._id,

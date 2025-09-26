@@ -1,3 +1,4 @@
+"use client"
 import CategoryFoodCard from "./CategoryFoodCard";
 import { foodType, categoryType } from "../../types";
 import { Dispatch, SetStateAction } from "react";

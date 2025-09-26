@@ -1,3 +1,4 @@
+"use client"
 import { OrdersTable } from "./ordersComponents/OrdersTable";
 export const Orders = () => {
   return (

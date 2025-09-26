@@ -38,6 +38,12 @@ export default function CategoryCard({
     Record<string, { value: unknown; error: string; type: string }>
   >({ "New Category Name": { value: "", error: "", type: "text" } });
   const [updateModalOpen, setUpdateModalOpen] = useState(false);
+  const [token, setToken] = useState<string | null>(null);
+  useEffect(() => {
+    if(localStorage.getItem("token")){
+      setToken(localStorage.getItem("token"));
+    }
+  }, []);
   function inputValidationUpdate(): boolean {
     let tempCount = 0;
     for (let i = 0; i < Object.keys(allInputs).length; i++) {
@@ -74,7 +80,7 @@ export default function CategoryCard({
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${localStorage.getItem("token")}`,
+          "Authorization": `Bearer ${token}`,
         },
         body: JSON.stringify({
           id: id,
@@ -102,7 +108,7 @@ export default function CategoryCard({
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorage.getItem("token")}`,
+        "Authorization": `Bearer ${token}`,
       },
     })
       .then((response) => {

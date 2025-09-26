@@ -35,6 +35,12 @@ export default function AddFood({
     "Food Ingredients": { value: "", error: "", type: "text" },
     "Food Image": { value: "", error: "", type: "image" },
   });
+  const [token, setToken] = useState<string | null>(null);
+  useEffect(() => {
+    if(localStorage.getItem("token")){
+      setToken(localStorage.getItem("token"));
+    }
+  }, []);
   function inputValidation() {
     let tempCount = 0;
     for (let i = 0; i < Object.keys(allInputs).length; i++) {
@@ -82,7 +88,7 @@ export default function AddFood({
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${localStorage.getItem("token")}`,
+          "Authorization": `Bearer ${token}`,
         },
         body: JSON.stringify({
           foodName: foodName,
