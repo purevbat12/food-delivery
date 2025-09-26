@@ -54,7 +54,6 @@ export default function InputComp({
       body: data
     });
     const uploadedImageURL = await res.json();
-    console.log(uploadedImageURL.url);
     previewState?.setter(uploadedImageURL.url);
     setAllInputs((prev) =>
       produce(prev, (draft) => {
@@ -75,7 +74,6 @@ export default function InputComp({
       body: data
     });
     const uploadedImageURL = await res.json();
-    console.log(uploadedImageURL.url);
     previewState?.setter(uploadedImageURL.url);
     setAllInputs((prev) =>
       produce(prev, (draft) => {
@@ -134,7 +132,6 @@ export default function InputComp({
           value={""}
           className="rounded-[6px] border border-[#E4E4E7] w-[100%] px-[10px] py-[8px] cursor-pointer"
           onChange={(event) => {
-            console.log(event.target.value);
             inputValueSetter(setAllInputs, label, event, type);
           }}
         >

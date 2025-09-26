@@ -1,11 +1,14 @@
 "use client"
-import { createContext, useContext, useState, useEffect, useRef, Dispatch, SetStateAction } from "react";
+import { createContext, useContext, useState, useEffect, useRef, Dispatch, SetStateAction, ReactNode } from "react";
 interface contextType {
   emailToken: string | null;
   setEmailToken: Dispatch<SetStateAction<string | null>>;
 }
 const EmailContext = createContext<contextType| null>(null);
-export function EmailVerify({ children }: any){
+type propsType = {
+    children: ReactNode;
+}
+export function EmailVerify({ children }: propsType){
     const [emailToken, setEmailToken] = useState<string | null>(null);
     const channelRef = useRef<BroadcastChannel | null>(null);
     useEffect(() => {

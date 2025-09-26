@@ -206,7 +206,7 @@ export default function Footer({pageState, allInputsState}: propsType){
                         pageState.setter(pageState.value + 1);
                     }
                 }
-            }}>Let's Go</Button>
+            }}>Let&apos;s Go</Button>
             <p>Already have an account? <Link className="mx-[12px] text-[#2563EB]" href="http://localhost:3000/auth/sign-in">Log in</Link></p>
         </div>
     );

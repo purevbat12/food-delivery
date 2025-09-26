@@ -10,10 +10,10 @@ type propsType = {
     allInputsState: {value: allInputsType, setter: Dispatch<SetStateAction<allInputsType>>};
 }
 export default function Footer({pageState, allInputsState}: propsType){
+    const router = useRouter();
     if(Object.keys(allInputsState.value[pageState.value]).includes("emailVerification")){
         return <></>;
     }
-    const router = useRouter();
     async function customChecks(){
         const allChecked: Record<string, boolean> = {};
         let overall = false;
@@ -167,7 +167,7 @@ export default function Footer({pageState, allInputsState}: propsType){
                     }
                 }
             }}>Next</Button>
-            <p>Don't have an account? <Link className="mx-[12px] text-[#2563EB]" href="http://localhost:3000/auth/sign-up">Sign up</Link></p>
+            <p>Don&apos;t have an account? <Link className="mx-[12px] text-[#2563EB]" href="http://localhost:3000/auth/sign-up">Sign up</Link></p>
         </div>
     );
 }

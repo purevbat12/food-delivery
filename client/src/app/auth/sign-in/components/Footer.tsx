@@ -57,7 +57,7 @@ export default function Footer({pageState, allInputsState}: propsType){
                 if(!splat[1].includes(".")){
                     valid = false;
                     allInputsState.setter(prev => produce(prev, draft => {
-                        draft[pageState.value][key].error = "Email missing '.'";
+                        draft[pageState.value][key].error = "Email missing &apos;.&apos;";
                     }));
                 }
                 const splatDot = splat[1].split(".");
@@ -191,8 +191,8 @@ export default function Footer({pageState, allInputsState}: propsType){
                         pageState.setter(pageState.value + 1);
                     }
                 }
-            }}>Let's Go</Button>
-            <p>Don't have an account? <Link className="mx-[12px] text-[#2563EB]" href="http://localhost:3000/auth/sign-up">Sign up</Link></p>
+            }}>Let&apos;s Go</Button>
+            <p>Don&apos;t have an account? <Link className="mx-[12px] text-[#2563EB]" href="http://localhost:3000/auth/sign-up">Sign up</Link></p>
         </div>
     );
 }
