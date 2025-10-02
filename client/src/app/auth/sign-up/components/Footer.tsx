@@ -207,7 +207,7 @@ export default function Footer({pageState, allInputsState}: propsType){
                     }
                 }
             }}>Let&apos;s Go</Button>
-            <p>Already have an account? <Link className="mx-[12px] text-[#2563EB]" href="https://food-delivery-dusky-ten.vercel.app/auth/sign-in">Log in</Link></p>
+            <p>Already have an account? <Link className="mx-[12px] text-[#2563EB]" href="https://food-delivery-client.vercel.app/auth/sign-in">Log in</Link></p>
         </div>
     );
 }
