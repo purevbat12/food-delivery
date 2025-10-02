@@ -24,7 +24,7 @@ export const signupController = async (req: Request, res: Response) => {
   });
   const token = generateNewToken({ userId: _id });
   sendUserVerificationLink(
-    `${req.protocol}://${req.get("host")}/auth/verify-user?token=${token}`,
+    `${req.protocol}://food-delivery-dusky-ten.vercel.app/auth/verify-user?token=${token}`,
     email
   );
   res.status(201).send({ message: "Success" });
