@@ -192,7 +192,7 @@ export default function Footer({pageState, allInputsState}: propsType){
                     }
                 }
             }}>Let&apos;s Go</Button>
-            <p>Don&apos;t have an account? <Link className="mx-[12px] text-[#2563EB]" href="https://food-delivery-client.vercel.app/auth/sign-up">Sign up</Link></p>
+            <p>Don&apos;t have an account? <Link className="mx-[12px] text-[#2563EB]" href="/auth/sign-up">Sign up</Link></p>
         </div>
     );
 }
