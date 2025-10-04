@@ -84,7 +84,7 @@ export default function AddFood({
           break;
         } 
       }
-      await fetch(`http://localhost:8000/food/create`, {
+      await fetch(`https://food-delivery-nl5n.onrender.com/food/create`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

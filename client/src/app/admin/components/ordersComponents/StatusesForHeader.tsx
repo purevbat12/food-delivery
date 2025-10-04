@@ -20,7 +20,7 @@ export default function StatusesForHeader({pressedStatusState, orders, rerenderS
         let count = 0;
         for(let i = 0; i < orders.length; i++){
             count++;
-            await fetch(`http://localhost:8000/food-order/update`, {
+            await fetch(`https://food-delivery-nl5n.onrender.com/food-order/update`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",

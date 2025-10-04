@@ -22,7 +22,7 @@ export default function Categories({
   useEffect(() => {
     async function getAllItems() {
       await fetch(
-        `http://localhost:8000/food/get-all-foods-by-all-categories-object`,
+        `https://food-delivery-nl5n.onrender.com/food/get-all-foods-by-all-categories-object`,
         {
           method: "GET",
           headers: {

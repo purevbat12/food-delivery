@@ -51,7 +51,7 @@ export default function Container(){
     }
     useEffect(() => {
         async function getFoods(){
-            await fetch(`http://localhost:8000/food/get-all`, {
+            await fetch(`https://food-delivery-nl5n.onrender.com/food/get-all`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -72,7 +72,7 @@ export default function Container(){
         if(!cart?.cartItems){
             return;
         }
-        await fetch(`http://localhost:8000/food-order/create`, {
+        await fetch(`https://food-delivery-nl5n.onrender.com/food-order/create`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -93,7 +93,7 @@ export default function Container(){
         });
     }
     async function createCart(){
-        await fetch(`http://localhost:8000/food-cart/create`, {
+        await fetch(`https://food-delivery-nl5n.onrender.com/food-cart/create`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -111,7 +111,7 @@ export default function Container(){
         });
     }
     async function updateCart(id: string, updates: unknown){
-        await fetch(`http://localhost:8000/food-cart/update`, {
+        await fetch(`https://food-delivery-nl5n.onrender.com/food-cart/update`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -133,7 +133,7 @@ export default function Container(){
     }
     useEffect(() => {
         async function getOrders(){
-            await fetch(`http://localhost:8000/food-order/get-orders-of-user/${user?._id}`, {
+            await fetch(`https://food-delivery-nl5n.onrender.com/food-order/get-orders-of-user/${user?._id}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -154,7 +154,7 @@ export default function Container(){
             });
         }
         async function getCart(){
-            await fetch(`http://localhost:8000/food-cart/get/${user?._id}`, {
+            await fetch(`https://food-delivery-nl5n.onrender.com/food-cart/get/${user?._id}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -184,7 +184,7 @@ export default function Container(){
         }
     }, [user, rerender]);
     async function sendEmail(){
-        await fetch(`http://localhost:8000/auth/verify-email`, {
+        await fetch(`https://food-delivery-nl5n.onrender.com/auth/verify-email`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -213,7 +213,7 @@ export default function Container(){
                 setTokenExpired(expired);
             }
             const id = decoded?.userId;
-            await fetch(`http://localhost:8000/auth/get/${id}`, {
+            await fetch(`https://food-delivery-nl5n.onrender.com/auth/get/${id}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json"

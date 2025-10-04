@@ -76,7 +76,7 @@ export default function CategoryCard({
   async function updateCategory(id: string, newCategoryName: string | unknown) {
     if (inputValidationUpdate()) {
       setUpdateModalOpen(false);
-      await fetch(`http://localhost:8000/food-category/update`, {
+      await fetch(`https://food-delivery-nl5n.onrender.com/food-category/update`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -104,7 +104,7 @@ export default function CategoryCard({
   }
 
   async function deleteCategory(id: string) {
-    await fetch(`http://localhost:8000/food-category/delete/${id}`, {
+    await fetch(`https://food-delivery-nl5n.onrender.com/food-category/delete/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

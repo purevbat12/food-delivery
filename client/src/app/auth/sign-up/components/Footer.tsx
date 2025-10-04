@@ -14,7 +14,7 @@ export default function Footer({pageState, allInputsState}: propsType){
     const [allUsers, setAllUsers] = useState<Record<string, {email: string}>[]>([]);
     useEffect(() => {
         async function getAllUsers(){
-            await fetch(`http://localhost:8000/auth/get-all`, {
+            await fetch(`https://food-delivery-nl5n.onrender.com/auth/get-all`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json"
@@ -182,7 +182,7 @@ export default function Footer({pageState, allInputsState}: propsType){
             <Button className="w-[100%] cursor-pointer" onClick={async () => {
                 if(inputValidation()){
                     if(pageState.value + 1 == Object.keys(allInputsState.value).length){
-                        await fetch(`http://localhost:8000/auth/sign-up`, {
+                        await fetch(`https://food-delivery-nl5n.onrender.com/auth/sign-up`, {
                             method: "POST",
                             headers: {
                                 "Content-Type": "application/json"

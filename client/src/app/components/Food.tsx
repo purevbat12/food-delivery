@@ -25,7 +25,7 @@ export default function FoodCard({food, rerenderState}: propsType){
         const token = localStorage.getItem("token") as string;
         const decoded = jwt.decode(token) as {userId: string};
         async function getCart(){
-            await fetch(`http://localhost:8000/food-cart/get/${decoded.userId}`, {
+            await fetch(`https://food-delivery-nl5n.onrender.com/food-cart/get/${decoded.userId}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -47,7 +47,7 @@ export default function FoodCard({food, rerenderState}: propsType){
     async function addToCart(){
         const newCartItems = (cart as cartType).cartItems;
         newCartItems?.push({food: food._id, quantity: foodCount});
-        await fetch(`http://localhost:8000/food-cart/update`, {
+        await fetch(`https://food-delivery-nl5n.onrender.com/food-cart/update`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",

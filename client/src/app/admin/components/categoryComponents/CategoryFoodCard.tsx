@@ -52,7 +52,7 @@ export default function CategoryCard({
         break;
       }
     }
-    await fetch(`http://localhost:8000/food/update`, {
+    await fetch(`https://food-delivery-nl5n.onrender.com/food/update`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -84,7 +84,7 @@ export default function CategoryCard({
     rerenderState.setter(rerenderState.value + 1);
   }
   async function deleteFood(id: string) {
-    await fetch(`http://localhost:8000/food/delete/${id}`, {
+    await fetch(`https://food-delivery-nl5n.onrender.com/food/delete/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

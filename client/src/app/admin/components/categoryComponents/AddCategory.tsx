@@ -67,7 +67,7 @@ export default function AddCategory({ rerenderState, categories }: propsType) {
   async function addCategory(categoryName: string) {
     if (inputValidationAdd()) {
       setAddModalOpen(false);
-      await fetch(`http://localhost:8000/food-category/create`, {
+      await fetch(`https://food-delivery-nl5n.onrender.com/food-category/create`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

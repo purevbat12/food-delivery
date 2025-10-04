@@ -12,7 +12,7 @@ export default function AllDishes({ selectedCategoryState }: propsType) {
   useEffect(() => {
     async function getAllItems() {
       await fetch(
-        `http://localhost:8000/food/get-all-foods-by-all-categories`,
+        `https://food-delivery-nl5n.onrender.com/food/get-all-foods-by-all-categories`,
         {
           method: "GET",
           headers: {

@@ -14,7 +14,7 @@ export default function Footer({pageState, allInputsState}: propsType){
     const [allUsers, setAllUsers] = useState<Record<string, {email: string, password: string}>[]>([]);
     useEffect(() => {
         async function getAllUsers(){
-            await fetch(`http://localhost:8000/auth/get-all`, {
+            await fetch(`https://food-delivery-nl5n.onrender.com/auth/get-all`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json"
@@ -90,7 +90,7 @@ export default function Footer({pageState, allInputsState}: propsType){
             if(Object.keys(allInputsState.value[pageState.value])[i] == "password"){
                 let valid = true;
                 let isValid: boolean = false;
-                await fetch(`http://localhost:8000/auth/verify-password`, {
+                await fetch(`https://food-delivery-nl5n.onrender.com/auth/verify-password`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
@@ -159,11 +159,11 @@ export default function Footer({pageState, allInputsState}: propsType){
     }
     return (
         <div className="flex flex-col gap-[24px]">
-            <Link className="hover:underline" href="http://localhost:3000/auth/forgot-password">Forgot password?</Link>
+            <Link className="hover:underline" href="/auth/forgot-password">Forgot password?</Link>
             <Button className="w-[100%] cursor-pointer" onClick={async () => {
                 if(await inputValidation()){
                     if(pageState.value + 1 == Object.keys(allInputsState.value).length){
-                        await fetch(`http://localhost:8000/auth/sign-in`, {
+                        await fetch(`https://food-delivery-nl5n.onrender.com/auth/sign-in`, {
                             method: "POST",
                             headers: {
                                 "Content-Type": "application/json"

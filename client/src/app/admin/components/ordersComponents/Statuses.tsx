@@ -18,7 +18,7 @@ export default function Statuses({pressedStatusState, order, rerenderState}: pro
         }
     }, []);
     async function updateStatus(status: string){
-        await fetch(`http://localhost:8000/food-order/update`, {
+        await fetch(`https://food-delivery-nl5n.onrender.com/food-order/update`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",

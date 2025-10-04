@@ -11,7 +11,7 @@ export const OrdersTable = () => {
   const [rerender, setRerender] = useState(0);
   useEffect(() => {
     async function getOrders(){
-      await fetch(`http://localhost:8000/food-order/get-all`, {
+      await fetch(`https://food-delivery-nl5n.onrender.com/food-order/get-all`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json"
@@ -31,7 +31,7 @@ export const OrdersTable = () => {
   }, [rerender]);
   useEffect(() => {
     async function getUsers(){
-      await fetch(`http://localhost:8000/auth/get-all`, {
+      await fetch(`https://food-delivery-nl5n.onrender.com/auth/get-all`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json"

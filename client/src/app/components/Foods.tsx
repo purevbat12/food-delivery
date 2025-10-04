@@ -13,7 +13,7 @@ export default function Foods({category, rerenderState}: propsType){
     const [foods, setFoods] = useState<foodType[]>([]);
     useEffect(() => {
         async function getFoods(){
-            await fetch(`http://localhost:8000/food/get-foods-by-category?categoryId=${category._id}`, {
+            await fetch(`https://food-delivery-nl5n.onrender.com/food/get-foods-by-category?categoryId=${category._id}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json"

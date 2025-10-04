@@ -9,7 +9,7 @@ export default function Inputs(){
     const { emailToken } = useEmailVerify();
     const [page, setPage] = useState(0);
     async function sendRequest(){
-        await fetch(`http://localhost:8000/auth/reset-password-request`, {
+        await fetch(`https://food-delivery-nl5n.onrender.com/auth/reset-password-request`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

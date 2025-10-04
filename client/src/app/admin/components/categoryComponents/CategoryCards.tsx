@@ -25,7 +25,7 @@ export default function CategoryCards({
   useEffect(() => {
     async function getAllItems() {
       await fetch(
-        `http://localhost:8000/food/get-all-foods-by-all-categories`,
+        `https://food-delivery-nl5n.onrender.com/food/get-all-foods-by-all-categories`,
         {
           method: "GET",
           headers: {
@@ -50,7 +50,7 @@ export default function CategoryCards({
   }, [rerenderState.value]);
   useEffect(() => {
     async function getCategories() {
-      await fetch(`http://localhost:8000/food-category/get-all`, {
+      await fetch(`https://food-delivery-nl5n.onrender.com/food-category/get-all`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

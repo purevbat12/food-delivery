@@ -10,7 +10,7 @@ export default function Orders() {
   const [categories, setCategories] = useState<categoryType[]>([]);
   useEffect(() => {
     async function getCategories() {
-      await fetch(`http://localhost:8000/food-category/get-all`, {
+      await fetch(`https://food-delivery-nl5n.onrender.com/food-category/get-all`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

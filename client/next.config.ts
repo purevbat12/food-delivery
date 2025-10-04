@@ -7,7 +7,7 @@ const nextConfig = {
     return [
       {
         source: "/api/:path*",
-        destination: "http://localhost:8000/:path*",
+        destination: "https://food-delivery-nl5n.onrender.com/:path*",
       },
     ];
   },

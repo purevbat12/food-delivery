@@ -14,7 +14,7 @@ export default function Food({foodId}: propsType){
     }, []);
     useEffect(() => {
         async function getFood(){
-            await fetch(`http://localhost:8000/food/get/${foodId.food}`, {
+            await fetch(`https://food-delivery-nl5n.onrender.com/food/get/${foodId.food}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",

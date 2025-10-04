@@ -14,7 +14,7 @@ export default function Contianer() {
   const router = useRouter();
   useEffect(() => {
     async function getUser(id: string){
-      await fetch(`http://localhost:8000/auth/get/${id}`, {
+      await fetch(`https://food-delivery-nl5n.onrender.com/auth/get/${id}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json"

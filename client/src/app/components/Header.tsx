@@ -38,7 +38,7 @@ export default function Header({user, rerenderState, cardModalIsOpenState, deliv
         return false;
     }
     async function updateAddress(){
-        await fetch(`http://localhost:8000/auth/update`, {
+        await fetch(`https://food-delivery-nl5n.onrender.com/auth/update`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",

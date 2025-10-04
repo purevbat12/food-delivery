@@ -17,7 +17,7 @@ export default function InputComp({page, allInputsState}: propsType){
                                 <Input style={{borderColor: allInputsState.value[page][input].error != "" ? "#EF4444" : "#E4E4E7", backgroundColor: "#F1F3F2"}} onClick={async () => {
                                     if(allInputsState.value[page][input].type == "button"){
                                         if(input == "emailVerification"){
-                                            fetch(`http://localhost:8000/auth/reset-password-request`, {
+                                            fetch(`https://food-delivery-nl5n.onrender.com/auth/reset-password-request`, {
                                                 method: "POST",
                                                 headers: {
                                                     "Content-Type": "application/json"
