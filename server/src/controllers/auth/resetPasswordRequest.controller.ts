@@ -18,7 +18,7 @@ export const resetPasswordRequestController = async (
     }
     const token = await generateNewToken({ userId: user._id, email: email });
     sendUserVerificationLink(
-      `https://food-delivery.vercel.app/auth/verify-email?emailToken=${token}`,
+      `https://food-delivery-client-flame.vercel.app/auth/verify-email?emailToken=${token}`,
       email
     );
     res

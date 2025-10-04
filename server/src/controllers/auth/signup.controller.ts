@@ -24,7 +24,7 @@ export const signupController = async (req: Request, res: Response) => {
   });
   const token = generateNewToken({ userId: _id });
   sendUserVerificationLink(
-    `${req.protocol}://localhost:3000/auth/verify-user?token=${token}`,
+    `https://food-delivery-client-flame.vercel.app/auth/verify-user?token=${token}`,
     email
   );
   res.status(201).send({ message: "Success" });
